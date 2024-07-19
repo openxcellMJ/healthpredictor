@@ -1,7 +1,6 @@
 
 import 'package:dio/dio.dart';
 
-import '../preferences/preference_utils.dart';
 import 'dio_provider.dart';
 
 class DioRequest {
@@ -26,13 +25,13 @@ class DioRequest {
   }
 
   Future<Map<String, String>> getCustomHeaders() async {
-    final String accessToken = PreferenceUtils.getToken();
-    print("test=>${accessToken}");
+    //final String accessToken = PreferenceUtils.getToken();
+   // print("test=>${accessToken}");
     var customHeaders = {'content-type': 'application/json'};
-    customHeaders.addAll({
-      'Authorization': "Bearer $accessToken",
-      'language': PreferenceUtils.getAppLanguage(),
-    });
+    // customHeaders.addAll({
+    //   'Authorization': "Bearer $accessToken",
+    //   //'language': PreferenceUtils.getAppLanguage(),
+    // });
     return customHeaders;
   }
 }

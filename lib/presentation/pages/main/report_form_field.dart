@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../custom_widgets/app_widgets.dart';
+import '../../../custom_widgets/custom_edittext.dart';
+import '../../../domain/entities/fill_form_request.dart';
+import '../../../utils/utils.dart';
 import '../../../values/app_colors.dart';
+import '../../../values/strings_name.dart';
 import '../../controller/main/home_controller.dart';
 
 class ReportFormFiledPage extends GetView<HomeController> {
@@ -34,12 +41,23 @@ class ReportFormFiledPage extends GetView<HomeController> {
               controller.activeCurrentStep.value -= 1;
             },
             onStepContinue: () {
+              // if (controller.activeCurrentStep.value < (5 - 1)) {
+              //   controller.activeCurrentStep.value += 1;
+              // }
               if (controller.activeCurrentStep.value < (5 - 1)) {
-                controller.activeCurrentStep.value += 1;
+                if (_validateStep(controller.activeCurrentStep.value)) {
+                  controller.activeCurrentStep.value += 1;
+                }
+              } else {
+                setupApicallData();
               }
             },
             onStepTapped: (value) {
-              controller.activeCurrentStep.value = value;
+              if (_validateStep(controller.activeCurrentStep.value)) {
+                controller.activeCurrentStep.value = value;
+              }
+
+              // controller.activeCurrentStep.value = value;
             },
             controlsBuilder: (context, details) {
               return Row(
@@ -97,13 +115,13 @@ class ReportFormFiledPage extends GetView<HomeController> {
                     children: [
                       AppWidgets.setTextWidget('Personal Information', align: TextAlign.start, lines: 1, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.blackFont, fontSize: 20)),
                       const SizedBox(height: 10),
-                      _buildTextField(controller.firstNameController, 'Full Name', TextInputType.text),
-                      _buildTextField(controller.emailController, 'Email', TextInputType.emailAddress),
+                      CustomEditText(textInputAction: TextInputAction.next, hintText: 'First Name', controller: controller.firstNameController, fieldType: StringNames.normalField, type: TextInputType.text),
+                      CustomEditText(controller: controller.emailController, hintText: 'Email', type: TextInputType.emailAddress, fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
                       _buildDropdownField('Gender', ['Male', 'Female', 'Other'], controller.gender.value, (String? newValue) {}),
-                      _buildTextField(controller.ageController, 'Age', TextInputType.number),
-                      _buildTextField(controller.heightController, 'Height (cm)', TextInputType.number),
-                      _buildTextField(controller.weightController, 'Weight (kg)', TextInputType.number),
-                      const SizedBox(height: 20),
+                      CustomEditText(controller: controller.ageController, hintText: 'Age', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.heightController, hintText: 'Height (cm)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.weightController, hintText: 'Weight (kg)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.done),
+                      const SizedBox(height: 15),
                     ],
                   )),
               Step(
@@ -116,17 +134,17 @@ class ReportFormFiledPage extends GetView<HomeController> {
                     children: [
                       AppWidgets.setTextWidget('Lifestyle', align: TextAlign.start, lines: 1, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.blackFont, fontSize: 20)),
                       const SizedBox(height: 10),
-                      _buildTextField(controller.sleepHoursController, 'Average Sleep Hours', TextInputType.number),
+                      CustomEditText(controller: controller.sleepHoursController, hintText: 'Average hours of sleep per night', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.waterIntakeController, hintText: 'Daily Water Intake (litres)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.stepsCountController, hintText: 'Steps Count (Per Day)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.exerciseHoursController, hintText: 'Minutes of exercise per day', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.workHoursController, hintText: 'Work Hours', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.done),
                       GestureDetector(
                           onTap: () {
                             controller.selectDateForCreateAgenda(context);
                           },
-                          child: _buildTextField(controller.physicalExamController, 'Last Physical Exam', TextInputType.datetime, isEnable: true)),
-                      _buildTextField(controller.waterIntakeController, 'Daily Water Intake (litres)', TextInputType.number),
-                      _buildTextField(controller.stepsCountController, 'Steps Count (Per Day)', TextInputType.number),
-                      _buildTextField(controller.exerciseHoursController, 'Daily Exercise Hours', TextInputType.number),
-                      _buildTextField(controller.workHoursController, 'Work Hours', TextInputType.number),
-                      const SizedBox(height: 20),
+                          child: CustomEditText(controller: controller.physicalExamController, enabled: false, hintText: 'Last Physical Exam', type: TextInputType.datetime, textInputAction: TextInputAction.done, readOnly: true)),
+                      const SizedBox(height: 15),
                     ],
                   )),
               Step(
@@ -139,11 +157,11 @@ class ReportFormFiledPage extends GetView<HomeController> {
                     children: [
                       AppWidgets.setTextWidget('Health Details', align: TextAlign.start, lines: 1, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.blackFont, fontSize: 20)),
                       const SizedBox(height: 10),
-                      _buildTextField(controller.systolicController, 'Systolic Pressure (mmHg)', TextInputType.number),
-                      _buildTextField(controller.diastolicController, 'Diastolic Pressure (mmHg)', TextInputType.number),
-                      _buildTextField(controller.heartRateController, 'Heart Rate (bpm)', TextInputType.number),
-                      _buildTextField(controller.bloodSugarController, 'Blood Sugar Levels (mg/dL)', TextInputType.number),
-                      const SizedBox(height: 20),
+                      CustomEditText(controller: controller.heartRateController, hintText: 'Heart Rate (bpm)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.bloodSugarController, hintText: 'Blood Sugar Levels (mg/dL)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.systolicController, hintText: 'Systolic Pressure (mmHg)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.diastolicController, hintText: 'Diastolic Pressure (mmHg)', type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.done),
+                      const SizedBox(height: 15),
                     ],
                   )),
               Step(
@@ -163,8 +181,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                       }),
                       _buildDropdownField('Alcohol Consumption', ['None', 'Occasional', 'Regular'], controller.alcoholConsumption.value, (String? newValue) {}),
                       _buildDropdownField('Physical Activity Level', ['Sedentary', 'Lightly Active', 'Moderately Active', 'Very Active'], controller.physicalActivityLevel.value, (String? newValue) {}),
-                      _buildDropdownField('Diet Type', ['Omnivore', 'Vegetarian', 'Vegan', 'Pescatarian'], controller.dietType.value, (String? newValue) {}),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 15),
                     ],
                   )),
               Step(
@@ -177,13 +194,12 @@ class ReportFormFiledPage extends GetView<HomeController> {
                     children: [
                       AppWidgets.setTextWidget('Additional Information', align: TextAlign.start, lines: 1, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.blackFont, fontSize: 20)),
                       const SizedBox(height: 10),
-                      _buildDropdownField('Alcohol Consumption', ['None', 'Occasional', 'Regular'], controller.alcoholConsumption.value, (String? newValue) {}),
-                      _buildDropdownField('Physical Activity Level', ['Sedentary', 'Lightly Active', 'Moderately Active', 'Very Active'], controller.physicalActivityLevel.value, (String? newValue) {}),
+                      _buildDropdownField('Diet Type', ['Omnivore', 'Vegetarian', 'Vegan', 'Pescatarian'], controller.dietType.value, (String? newValue) {}),
                       _buildDropdownField('Stress Level', ['Low', 'Moderate', 'High'], controller.stressLevel.value, (String? newValue) {}),
                       _buildDropdownField('Current Medications', ['Metformin', 'Aspirin'], controller.currentMedications.value, (value) {}),
                       _buildDropdownField('Frequency of Checkups', ['Annually', 'Biannually', 'Rarely'], controller.frequencyOfCheckups.value, (String? newValue) {}),
                       _buildDropdownField('Type of Physical Activities', ['Running', 'Yoga', 'Weightlifting'], controller.physicalActivities.value, (value) {}),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 15),
                     ],
                   ))
             ],
@@ -239,6 +255,64 @@ class ReportFormFiledPage extends GetView<HomeController> {
         ),
       ),
     );
+  }
+
+  setupApicallData() {
+    var form = FillFormRequest();
+    form.full_name = controller.firstNameController.text;
+    form.email = controller.emailController.text;
+    form.gender = controller.gender.value;
+    form.age = int.parse(controller.ageController.text);
+    form.heightCm = int.parse(controller.heightController.text);
+    form.weightKg = int.parse(controller.weightController.text);
+    form.averageSleepHours = int.parse(controller.sleepHoursController.text);
+    form.dailyWaterIntakeLitres = int.parse(controller.waterIntakeController.text);
+    form.stepsCountPerDay = int.parse(controller.stepsCountController.text);
+    form.dailyExerciseHours = int.parse(controller.exerciseHoursController.text);
+    form.workHours = int.parse(controller.workHoursController.text);
+    form.lastPhysicalExam = controller.physicalExamController.text;
+    form.heartRateBpm = int.parse(controller.heartRateController.text);
+    form.bloodSugarLevelsMgDl = int.parse(controller.bloodSugarController.text);
+    form.systolicPressure = int.parse(controller.systolicController.text);
+    form.diastolicPressure = int.parse(controller.diastolicController.text);
+    form.medicalHistory = [controller.medicalHistory.value.toString()];
+    form.heredityDiseases = [controller.heredityDiseases.value];
+    form.smokingStatus = [controller.smokingStatus.value];
+    form.alcoholConsumption = [controller.alcoholConsumption.value];
+    form.physicalActivityLevel = [controller.physicalActivityLevel.value];
+    form.dietType = [controller.dietType.value];
+    form.stressLevel = [controller.stressLevel.value];
+    form.currentMedications = [controller.currentMedications.value];
+    form.frequencyOfCheckups = [controller.frequencyOfCheckups.value];
+    form.typeOfPhysicalActivities = [controller.physicalActivities.value];
+    print("tests=>${form.toJson()}");
+  }
+
+  bool _validateStep(int currentStep) {
+    print("etetet=>${currentStep}");
+    switch (currentStep) {
+      case 0:
+        if (controller.firstNameController.text.trim().isEmpty) {
+          Utils.showSnackBar("Enter valid full name", color: AppColors.textFieldErrorText);
+          return false;
+        } else if (!FormValidator.validateEmail(controller.emailController.text.trim())) {
+          Utils.showSnackBar("Enter valid email address", color: AppColors.textFieldErrorText);
+          return false;
+        }
+        break;
+      case 1:
+        // Add validation logic for step 1 here
+        break;
+      case 2:
+        // Add validation logic for step 2 here
+        break;
+      case 3:
+        // Add validation logic for step 3 here
+        break;
+      case 4:
+        break;
+    }
+    return true;
   }
 }
 

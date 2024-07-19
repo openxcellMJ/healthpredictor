@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../preferences/preference_utils.dart';
+
 import 'api_constants.dart';
 
 class RequestHeaderInterceptor extends InterceptorsWrapper {
@@ -14,11 +14,11 @@ class RequestHeaderInterceptor extends InterceptorsWrapper {
 
   Future<Map<String, String>> getCustomHeaders() async {
     var customHeaders = {'content-type': (isMultiPart) ? 'multipart/form-data' : 'application/json'};
-    final String accessToken = PreferenceUtils.getToken();
-    customHeaders.addAll({
-      'Authorization': "Bearer $accessToken",
-      'language': PreferenceUtils.getAppLanguage(),
-    });
+   // final String accessToken = PreferenceUtils.getToken();
+    // customHeaders.addAll({
+    //   'Authorization': "Bearer $accessToken",
+    //   'language': PreferenceUtils.getAppLanguage(),
+    // });
 
     return customHeaders;
   }

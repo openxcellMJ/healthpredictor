@@ -1,28 +1,21 @@
-import 'dart:convert';
-import 'dart:io';
+import 'package:envitely/domain/entities/fill_form_response.dart';
 import 'package:envitely/network/base_remote_source.dart';
-import 'package:path/path.dart';
-
-import 'package:dio/dio.dart' as dio;
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:mime/mime.dart';
 
-import '../../domain/entities/login/login_request.dart';
-import '../../domain/entities/login/login_response.dart';
+import '../../domain/entities/fill_form_request.dart';
+
 import '../../network/api_constants.dart';
 import '../../network/base/base_api_response.dart';
 
 class NetworkDataSource extends BaseRemoteSource {
-  Future<BaseApiResponse<LoginResponseModel>> login(
-      LoginRequestModel queryParam) {
+
+
+  Future<FillFormResponse> fillReport(FillFormRequest createNoteRequestModel) {
     isMultiPart = false;
-    var dioCall = dioClient.post(ApiConstants.login, data: queryParam.toJson());
+    var dioCall = dioClient.post(ApiConstants.fillReport, data: createNoteRequestModel.toJson());
     try {
-      return callApiWithErrorParser(dioCall).then((response) =>
-          BaseApiResponse<LoginResponseModel>.fromJson(response.data,
-              (response) => LoginResponseModel.fromJson(response)));
+      return callApiWithErrorParser(dioCall).then((response) => FillFormResponse.fromJson(response.data));
     } catch (e) {
       debugPrint(e.printError as String?);
       rethrow;

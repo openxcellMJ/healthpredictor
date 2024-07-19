@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
-import '../preferences/preference_utils.dart';
+
 import 'dio_provider.dart';
 import 'error_handlers.dart';
 
@@ -27,10 +27,7 @@ class BaseRemoteSource {
         Exception exception = handleDioError(dioError);
         print("exception is==== ${exception.runtimeType.toString()}");
         if (exception.runtimeType.toString() == "UnauthorizedException") {
-          if( PreferenceUtils.getIsLogin()) {
-            // Utils.screenNavigationOffAllByNamed(RoutesName.login);
-            // PreferenceUtils.clearPreference();
-          }
+
         }
         throw exception;
       }

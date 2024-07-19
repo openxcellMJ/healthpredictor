@@ -1,13 +1,10 @@
-import 'dart:io';
-
 import 'package:envitely/domain/usecases/main/main_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler/permission_handler.dart' as MyPermissionStatus;
-import '../../../data/remote/network_data_source.dart';
-import '../../../main.dart';
-import '../../../preferences/preference_utils.dart';
+
+import '../../../custom_widgets/app_widgets.dart';
+import '../../../domain/entities/fill_form_request.dart';
+import '../../../network/base/base_api_exception.dart';
 import '../../../utils/utils.dart';
 import '../../../values/app_colors.dart';
 
@@ -19,19 +16,19 @@ class HomeController extends GetxController {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
 
-  final TextEditingController ageController = TextEditingController();
-  final TextEditingController heightController = TextEditingController();
-  final TextEditingController weightController = TextEditingController();
-  final TextEditingController sleepHoursController = TextEditingController();
+  final TextEditingController ageController = TextEditingController(text: "1");
+  final TextEditingController heightController = TextEditingController(text: "1");
+  final TextEditingController weightController = TextEditingController(text: "1");
+  final TextEditingController sleepHoursController = TextEditingController(text: "1");
   final TextEditingController physicalExamController = TextEditingController();
-  final TextEditingController waterIntakeController = TextEditingController();
-  final TextEditingController stepsCountController = TextEditingController();
-  final TextEditingController exerciseHoursController = TextEditingController();
-  final TextEditingController workHoursController = TextEditingController();
-  final TextEditingController systolicController = TextEditingController();
-  final TextEditingController diastolicController = TextEditingController();
-  final TextEditingController heartRateController = TextEditingController();
-  final TextEditingController bloodSugarController = TextEditingController();
+  final TextEditingController waterIntakeController = TextEditingController(text: "1");
+  final TextEditingController stepsCountController = TextEditingController(text: "1");
+  final TextEditingController exerciseHoursController = TextEditingController(text: "1");
+  final TextEditingController workHoursController = TextEditingController(text: "1");
+  final TextEditingController systolicController = TextEditingController(text: "1");
+  final TextEditingController diastolicController = TextEditingController(text: "1");
+  final TextEditingController heartRateController = TextEditingController(text: "1");
+  final TextEditingController bloodSugarController = TextEditingController(text: "1");
   var gender = 'Male'.obs;
   var medicalHistory = 'Hypertension'.obs;
   var heredityDiseases = 'Diabetes'.obs;
@@ -77,6 +74,22 @@ class HomeController extends GetxController {
     if (picked != null && picked != mySelectedAgendaDate.value) {
       mySelectedAgendaDate.value = picked;
       physicalExamController.text = Utils.getDOBFormatedDate(mySelectedAgendaDate.value.toString());
+    }
+  }
+
+  fillFormApi(FillFormRequest loginRequestModel) async {
+    print("tetst=>${loginRequestModel.toJson()}");
+    AppWidgets.showProgress();
+    try {
+      var response = await mainUseCase.fillReport(loginRequestModel);
+      AppWidgets.closeProgress();
+      if (response != null) {
+        print("tetst=>${response.predictions}");
+      }
+    } catch (err) {
+      AppWidgets.closeProgress();
+      var msg = err as ApiException;
+      Utils.showSnackBar(msg.message, color: AppColors.colorRed);
     }
   }
 }

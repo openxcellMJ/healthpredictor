@@ -13,6 +13,6 @@ abstract class ApiConstants {
   static String fillReport = "$baseUrl/health-record/";
   static String uploadReport = "$baseUrl/upload-report/";
   static String reportAnalysis = "$baseUrl/report-analysis/";
-
+  static String askQuestions = "$baseUrl/ask-question/";
 
 }

@@ -8,6 +8,7 @@ import 'package:mime/mime.dart';
 
 import '../../domain/entities/fill_form_request.dart';
 
+import '../../domain/entities/question_answer_response.dart';
 import '../../domain/entities/report_analysis_response.dart';
 import '../../domain/entities/upload_response.dart';
 import '../../network/api_constants.dart';
@@ -40,6 +41,23 @@ class NetworkDataSource extends BaseRemoteSource {
       rethrow;
     }
   }
+
+
+  Future<QuestionAnswerResponse> askQuestions(String sessionId,String query) {
+    isMultiPart = false;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['query'] = query;
+    data['session_id'] = sessionId;
+    isMultiPart = false;
+    var dioCall = dioClient.post(ApiConstants.askQuestions, queryParameters:  data);
+    try {
+      return callApiWithErrorParser(dioCall).then((response) => QuestionAnswerResponse.fromJson(response.data));
+    } catch (e) {
+      debugPrint(e.printError as String?);
+      rethrow;
+    }
+  }
+
   Future<UploadResponse> uploadFile(String filepath) async {
     isMultiPart = true;
 

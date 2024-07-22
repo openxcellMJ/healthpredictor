@@ -12,7 +12,7 @@ import '../../../values/app_colors.dart';
 import '../../../values/app_images.dart';
 import 'question_answer_page.dart';
 
-class FormAnswerPage extends GetView<HomeController> {
+class FormAnswerReportPage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     if (Get.arguments != null) {
@@ -34,35 +34,6 @@ class FormAnswerPage extends GetView<HomeController> {
           elevation: 0.0,
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                Get.to(QuestionAnswerPage());
-              },
-              child: Container(
-                padding: const EdgeInsets.only(left: 10, right: 10, top: 8, bottom: 8),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      AppColors.gradientStart,
-                      AppColors.gradientMiddle,
-                      AppColors.gradientEnd,
-                    ],
-                  ),
-                ),
-                child: Text(
-                  "Q & A",
-                  style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 14),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            )
-          ],
           title: Text(
             'Result',
             style: Get.theme.textTheme.displayLarge?.copyWith(fontSize: 20, color: AppColors.gradientMiddle),

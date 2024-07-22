@@ -131,10 +131,9 @@ class AppWidgets {
   static Widget setElevatedButtonNew(String? btnText, Function()? onClick, {double padding = 8, TextStyle? styles, EdgeInsets? marginContainer}) {
     return Container(
       margin: marginContainer ?? EdgeInsets.only(top: 10.h, bottom: 10.h, left: 20.w, right: 20.w),
-      width: double.infinity,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
@@ -146,7 +145,8 @@ class AppWidgets {
       ),
       child: ElevatedButton(
         onPressed: onClick,
-        style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
+        style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius:
+        BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
         child: Text(
           btnText ?? "",
           style: styles ?? Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 14.sp),

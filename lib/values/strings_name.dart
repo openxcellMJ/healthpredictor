@@ -22,14 +22,8 @@ class StringNames {
   static const String screenResetPassword = "ResetPassword";
   static const String screenOtp = "OTP";
 
-  static const String isFromScheduled = "isFromScheduled";
-  static const String isFromRework = "isFromRework";
-  static const String isFromDialog = "isFromDialog";
-
-  static const String broadcastCheckInSuccessful = "notifyCheckInSuccessful";
-  static const String broadcastOpenPopupInDashboard = "broadcastOpenPopupInDashboard";
-  static const String broadcastUpdateOrderDetails = "broadcastUpdateOrderDetails";
-  static const String broadcastBlockUnblock = "BlockUnblock";
+  static const String BOT = 'bot';
+  static const String YOU = 'you';
 }
 //'yyyy': Year with four digits (e.g., 2023).
 // 'MM': Month with two digits (e.g., 05).

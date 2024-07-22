@@ -12,6 +12,8 @@ class AppImage {
   static String icAppLoader = "$commanName/ic_loader.json";
   static String icRight = "$commanName/ic_right.svg";
   static String icArrowBack = "$commanName/ic_arrow_back.svg";
+  static String icEmptyChat = "$commanName/empty_chat.gif";
+  static String icBotTyping = "$commanName/bot_typing.gif";
 
   static Widget loadSVG(String image, {double width = double.maxFinite, double height = double.maxFinite, BoxFit fit = BoxFit.contain, double radius = 0, Color? color}) {
     return ClipRRect(

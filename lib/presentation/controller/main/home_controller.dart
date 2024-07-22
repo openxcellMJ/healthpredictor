@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:envitely/domain/usecases/main/main_use_case.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -91,5 +94,34 @@ class HomeController extends GetxController {
       var msg = err as ApiException;
       Utils.showSnackBar(msg.message, color: AppColors.colorRed);
     }
+  }
+
+
+  callUploadFileData(String filePath) async {
+    AppWidgets.showProgress();
+    try {
+      var response = await mainUseCase.uploadFile(filePath);
+      AppWidgets.closeProgress();
+      if (response != null) {
+        print("tetst=>success");
+      }
+    } catch (err) {
+      AppWidgets.closeProgress();
+      var msg = err as ApiException;
+      Utils.showSnackBar(msg.message, color: AppColors.colorRed);
+    }
+  }
+  void getFiles() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [ 'pdf'],
+    );
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      print("tetst=>${file.path}");
+      callUploadFileData(file.path);
+      // callCertificateUpload(file.path, index, file);
+    }
+    // checkItemValidate(index);
   }
 }

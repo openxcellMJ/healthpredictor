@@ -2,6 +2,7 @@ import 'package:envitely/domain/repositories/mains/main_repository.dart';
 
 import '../../entities/fill_form_request.dart';
 import '../../entities/fill_form_response.dart';
+import '../../entities/upload_response.dart';
 
 class MainUseCase {
   final MainRepository _repo;
@@ -10,5 +11,9 @@ class MainUseCase {
 
   Future<FillFormResponse> fillReport(FillFormRequest loginRequestModel) {
     return _repo.fillReport(loginRequestModel);
+  }
+  Future<UploadResponse> uploadFile(String filepath) {
+    return _repo.uploadFile(filepath);
+
   }
 }

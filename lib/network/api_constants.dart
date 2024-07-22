@@ -11,4 +11,6 @@ abstract class ApiConstants {
 
   //authentication
   static String fillReport = "$baseUrl/health-record/";
+  static String uploadReport = "$baseUrl/upload-report/";
+
 }

@@ -82,40 +82,45 @@ class HomePage extends GetView<HomeController> {
                   const SizedBox(height: 10),
                   Align(alignment: Alignment.center, child: AppWidgets.setTextWidget('strOr'.tr, align: TextAlign.center, lines: 3, styles: Get.theme.textTheme.displayMedium?.copyWith(color: AppColors.lightGray, fontSize: 14.sp))),
                   const SizedBox(height: 10),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: [
-                          AppColors.gradientStart,
-                          AppColors.gradientMiddle,
-                          AppColors.gradientEnd,
+                  InkWell(
+                    onTap: () {
+controller.getFiles();
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: [
+                            AppColors.gradientStart,
+                            AppColors.gradientMiddle,
+                            AppColors.gradientEnd,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.white.withOpacity(0.5), // Shadow color
+                            spreadRadius: 5, // Spread radius
+                            blurRadius: 7, // Blur radius
+                            offset: const Offset(0, 3), // Offset in the x and y direction
+                          ),
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.white.withOpacity(0.5), // Shadow color
-                          spreadRadius: 5, // Spread radius
-                          blurRadius: 7, // Blur radius
-                          offset: const Offset(0, 3), // Offset in the x and y direction
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AppImage.loadPNG(AppImage.icFromFill, width: 100, height: 100),
-                        const SizedBox(height: 10),
-                        AppWidgets.setTextWidget('strUploadReports'.tr, align: TextAlign.center, lines: 2, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 16.sp)),
-                        const SizedBox(height: 5),
-                        AppWidgets.setTextWidget('strUploadReportsDes'.tr, align: TextAlign.center, lines: 2, styles: Get.theme.textTheme.displayMedium?.copyWith(color: AppColors.lightGrayColor, fontSize: 12.sp)),
-                      ],
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          AppImage.loadPNG(AppImage.icFromFill, width: 100, height: 100),
+                          const SizedBox(height: 10),
+                          AppWidgets.setTextWidget('strUploadReports'.tr, align: TextAlign.center, lines: 2, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 16.sp)),
+                          const SizedBox(height: 5),
+                          AppWidgets.setTextWidget('strUploadReportsDes'.tr, align: TextAlign.center, lines: 2, styles: Get.theme.textTheme.displayMedium?.copyWith(color: AppColors.lightGrayColor, fontSize: 12.sp)),
+                        ],
+                      ),
                     ),
                   ),
                 ],

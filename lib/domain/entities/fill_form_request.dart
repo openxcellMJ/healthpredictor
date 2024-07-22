@@ -78,7 +78,7 @@ class FillFormRequest {
     physicalActivityLevel = json['physical_activity_level'].cast<String>();
     dietType = json['diet_type'].cast<String>();
     stressLevel = json['stress_level'].cast<String>();
-    currentMedications = json['current_medications'].cast<String>();
+     currentMedications = json['current_medications'].cast<String>();
     frequencyOfCheckups = json['frequency_of_checkups'].cast<String>();
     typeOfPhysicalActivities = json['type_of_physical_activities'].cast<String>();
   }

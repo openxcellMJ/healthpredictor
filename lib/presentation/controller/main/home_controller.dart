@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:envitely/domain/usecases/main/main_use_case.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:envitely/presentation/pages/main/form_answer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,6 +48,8 @@ class HomeController extends GetxController {
   var mySelectedAgendaDate = DateTime.now().obs;
   var activeCurrentStep = 0.obs;
 
+  var result = "".obs;
+
   Future<void> selectDateForCreateAgenda(BuildContext context) async {
     DateTime? picked = await showDatePicker(
       context: context,
@@ -88,6 +91,7 @@ class HomeController extends GetxController {
       AppWidgets.closeProgress();
       if (response != null) {
         print("tetst=>${response.predictions}");
+        Get.to(FormAnswerPage(),arguments: response.predictions);
       }
     } catch (err) {
       AppWidgets.closeProgress();

@@ -43,7 +43,10 @@ class HomePage extends GetView<HomeController> {
                   AppWidgets.setTextWidget('strHomeTxtss'.tr, align: TextAlign.start, lines: 5, styles: Get.theme.textTheme.displaySmall?.copyWith(color: AppColors.lightGray, fontSize: 13.sp)),
                   const SizedBox(height: 20),
                   GestureDetector(
-                    onTap: () => Get.to(const ReportFormFiledPage()),
+                    onTap: () {
+                      controller.clearFormValues();
+                      Get.to(const ReportFormFiledPage());
+                    },
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(15),
@@ -136,6 +139,7 @@ class HomePage extends GetView<HomeController> {
 
   showExitAppDialog() {
     Get.dialog(AlertDialog(
+      insetPadding: EdgeInsets.zero,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -143,30 +147,51 @@ class HomePage extends GetView<HomeController> {
           Center(
             child: AppWidgets.setTextWidget('strSureWantToExit'.tr, align: TextAlign.center, lines: 3, styles: Get.theme.textTheme.displaySmall?.copyWith(color: AppColors.blackFontTitle, fontSize: 16.sp)),
           ),
-          SizedBox(height: 24.h),
+          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(
-                child: AppWidgets.setElevatedButton(
-                  'strCancel'.tr,
-                  () {
-                    Get.back();
-                  },
+                child: Container(
+                  decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: AppColors.gradientMiddle, width: 0.5), color: AppColors.gradientStart),
+                  child: ElevatedButton(
+                    onPressed: () => Get.back(),
+                    style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))), backgroundColor: const MaterialStatePropertyAll(Colors.white)),
+                    child: Text(
+                      'strCancel'.tr,
+                      style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.gradientMiddle, fontSize: 14.sp),
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(
-                width: 10.w,
-              ),
+              SizedBox(width: 6),
               Expanded(
-                child: AppWidgets.setElevatedButton(
-                  'strConfirm'.tr,
-                  () {
-                    if (Platform.isAndroid) {
-                      exit(0);
-                    } else if (Platform.isIOS) {
-                      exit(0);
-                    }
-                  },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        AppColors.gradientStart,
+                        AppColors.gradientMiddle,
+                        AppColors.gradientEnd,
+                      ],
+                    ),
+                  ),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (Platform.isAndroid) {
+                        exit(0);
+                      } else if (Platform.isIOS) {
+                        exit(0);
+                      }
+                    },
+                    style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
+                    child: Text(
+                      "strConfirm".tr,
+                      style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 14.sp),
+                    ),
+                  ),
                 ),
               ),
             ],

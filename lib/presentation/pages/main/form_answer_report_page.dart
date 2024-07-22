@@ -43,7 +43,10 @@ class FormAnswerReportPage extends GetView<HomeController> {
           child: Container(
               padding: const EdgeInsets.all(15),
               child: Obx(
-                () => AppWidgets.setTextWidget(controller.result.value, align: TextAlign.start, lines: 1000, styles: Get.theme.textTheme.displayMedium?.copyWith(color: AppColors.blackFont, fontSize: 15)),
+                () => AppWidgets.setTextWidget(controller.result.value, align: TextAlign.start,
+
+                    lines: 10000, styles: Get.theme.textTheme.displayMedium?.copyWith(color:
+                    AppColors.blackFont, fontSize: 15)),
               )),
         ),
       ),

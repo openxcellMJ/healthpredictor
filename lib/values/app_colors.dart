@@ -186,18 +186,11 @@ class ThemeNames {
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: AppColors.colorLightBottomNavigationBar),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-        backgroundColor: AppColors.colorWhite,
-        // disabledBackgroundColor: AppColors.disableButtonBackground,
-        // disabledForegroundColor: AppColors.disableButtonText,
-
-        side: const BorderSide(
-          color: AppColors.orange,
-          width: 1,
-        ),
-        foregroundColor: AppColors.orange,
-        textStyle: const TextStyle(color: AppColors.orange, fontSize: 14, fontWeight: FontWeight.w700),
+        backgroundColor: Colors.transparent,
+        textStyle: const TextStyle(color: AppColors.gradientMiddle, fontSize: 14, fontWeight: FontWeight.w700),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100),
+          borderRadius: BorderRadius.circular(0),
+
         ),
       )),
       //Elevated Button Theme

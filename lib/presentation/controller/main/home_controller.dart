@@ -23,7 +23,6 @@ class HomeController extends GetxController {
 
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController ageController = TextEditingController(text: "1");
   final TextEditingController heightController = TextEditingController(text: "1");
   final TextEditingController weightController = TextEditingController(text: "1");
@@ -51,17 +50,50 @@ class HomeController extends GetxController {
   var currentMedications = 'Metformin'.obs;
   var frequencyOfCheckups = 'Annually'.obs;
   var physicalActivities = 'Running'.obs;
-
   var mySelectedAgendaDate = DateTime.now().obs;
   var activeCurrentStep = 0.obs;
-
   var result = "".obs;
   var chats = [].obs;
-
   var isBotTyping = false.obs;
   var isListen = true.obs;
   var sessionId = "".obs;
   ScrollController scrollController = ScrollController();
+
+
+  var currentMedicationsList = <String>[].obs;
+
+
+
+  clearFormValues() {
+    firstNameController.clear();
+    emailController.clear();
+    ageController.clear();
+    heightController.clear();
+    weightController.clear();
+    sleepHoursController.clear();
+    physicalExamController.clear();
+    waterIntakeController.clear();
+    stepsCountController.clear();
+    exerciseHoursController.clear();
+    workHoursController.clear();
+    systolicController.clear();
+    diastolicController.clear();
+    heartRateController.clear();
+    bloodSugarController.clear();
+    mySelectedAgendaDate.value = DateTime.now();
+    gender.value = 'Male';
+    medicalHistory.value = 'Hypertension';
+    heredityDiseases.value = 'Diabetes';
+    smokingStatus.value = 'Never';
+    alcoholConsumption.value = 'None';
+    physicalActivityLevel.value = 'Sedentary';
+    dietType.value = 'Omnivore';
+    stressLevel.value = 'Low';
+    currentMedications.value = 'Metformin';
+    frequencyOfCheckups.value = 'Annually';
+    physicalActivities.value = 'Running';
+    activeCurrentStep.value = 0;
+  }
 
   Future<void> selectDateForCreateAgenda(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -97,12 +129,12 @@ class HomeController extends GetxController {
   }
 
   fillFormApi(FillFormRequest loginRequestModel) async {
-    print("tetst=>${loginRequestModel.toJson()}");
     AppWidgets.showProgress();
     try {
       var response = await mainUseCase.fillReport(loginRequestModel);
       AppWidgets.closeProgress();
       if (response != null) {
+        Utils.hideKeyboard();
         Get.to(FormAnswerReportPage(), arguments: response.predictions);
       }
     } catch (err) {

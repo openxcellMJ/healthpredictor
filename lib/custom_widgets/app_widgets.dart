@@ -101,18 +101,21 @@ class AppWidgets {
   static Widget setElevatedOutlineButton(String? btnText, Function()? onClick, {double padding = 8, TextStyle? styles, EdgeInsets? marginContainer}) {
     return Container(
       width: double.infinity,
-      margin: marginContainer ?? const EdgeInsets.all(10),
+      margin: marginContainer ?? EdgeInsets.only(top: 10.h, bottom: 10.h, left: 20.w, right: 20.w),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),color: AppColors.gradientMiddle
+      ),
       child: OutlinedButton(
         onPressed: onClick,
-        style: Get.theme.outlinedButtonTheme.style?.copyWith(
-          //backgroundColor: MaterialStateProperty.all(isDisable ? AppColors.disableButtonBackground : AppColors.colorWhite),
-          side: MaterialStateProperty.all(const BorderSide(color: AppColors.orange)),
-        ),
+        style: Get.theme.outlinedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius:
+        BorderRadius.all(Radius.circular(0))))),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 14,
           ),
-          child: setTextWidget(btnText ?? "", lines: 2, styles: styles ?? Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.orange, fontSize: 14)),
+          child: setTextWidget(btnText ?? "", lines: 2, styles: styles ?? Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.gradientMiddle,
+
+              fontSize: 14)),
         ),
       ),
     );
@@ -145,8 +148,7 @@ class AppWidgets {
       ),
       child: ElevatedButton(
         onPressed: onClick,
-        style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius:
-        BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
+        style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
         child: Text(
           btnText ?? "",
           style: styles ?? Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 14.sp),

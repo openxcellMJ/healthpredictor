@@ -49,6 +49,7 @@ class HomeController extends GetxController {
   var activeCurrentStep = 0.obs;
 
   var result = "".obs;
+  var sessionId = "".obs;
 
   Future<void> selectDateForCreateAgenda(BuildContext context) async {
     DateTime? picked = await showDatePicker(
@@ -91,7 +92,7 @@ class HomeController extends GetxController {
       AppWidgets.closeProgress();
       if (response != null) {
         print("tetst=>${response.predictions}");
-        Get.to(FormAnswerPage(),arguments: response.predictions);
+        Get.to(FormAnswerPage(), arguments: response.predictions);
       }
     } catch (err) {
       AppWidgets.closeProgress();
@@ -100,13 +101,14 @@ class HomeController extends GetxController {
     }
   }
 
-
   callUploadFileData(String filePath) async {
     AppWidgets.showProgress();
     try {
       var response = await mainUseCase.uploadFile(filePath);
       AppWidgets.closeProgress();
       if (response != null) {
+        sessionId.value = response.sessionId ?? "";
+        callReportAnalysisData(sessionId.value);
         print("tetst=>success");
       }
     } catch (err) {
@@ -115,10 +117,28 @@ class HomeController extends GetxController {
       Utils.showSnackBar(msg.message, color: AppColors.colorRed);
     }
   }
+
+  callReportAnalysisData(String sessionId) async {
+    AppWidgets.showProgress();
+    try {
+      var response = await mainUseCase.reportAnalysis(sessionId);
+      AppWidgets.closeProgress();
+      if (response != null) {
+        Get.to(FormAnswerPage(), arguments: response.analysis);
+
+        print("tetst=>success");
+      }
+    } catch (err) {
+      AppWidgets.closeProgress();
+      var msg = err as ApiException;
+      Utils.showSnackBar(msg.message, color: AppColors.colorRed);
+    }
+  }
+
   void getFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: [ 'pdf'],
+      allowedExtensions: ['pdf'],
     );
     if (result != null) {
       File file = File(result.files.single.path!);

@@ -1,3 +1,4 @@
+import 'package:envitely/domain/entities/report_analysis_response.dart';
 import 'package:get/get.dart';
 
 import '../../domain/entities/fill_form_request.dart';
@@ -17,6 +18,12 @@ class MainRepositoryImpl implements MainRepository {
   @override
   Future<UploadResponse> uploadFile(String filepath) {
     return _remoteSource.uploadFile(filepath);
+
+  }
+
+  @override
+  Future<ReportAnalysisResponse> reportAnalysis(String sessionId) {
+    return _remoteSource.reportAnalysis(sessionId);
 
   }
 }

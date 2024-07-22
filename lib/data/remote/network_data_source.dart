@@ -8,6 +8,7 @@ import 'package:mime/mime.dart';
 
 import '../../domain/entities/fill_form_request.dart';
 
+import '../../domain/entities/report_analysis_response.dart';
 import '../../domain/entities/upload_response.dart';
 import '../../network/api_constants.dart';
 import '../../network/base/base_api_response.dart';
@@ -20,6 +21,20 @@ class NetworkDataSource extends BaseRemoteSource {
     var dioCall = dioClient.post(ApiConstants.fillReport, data: createNoteRequestModel.toJson());
     try {
       return callApiWithErrorParser(dioCall).then((response) => FillFormResponse.fromJson(response.data));
+    } catch (e) {
+      debugPrint(e.printError as String?);
+      rethrow;
+    }
+  }
+  Future<ReportAnalysisResponse> reportAnalysis(String sessionId) {
+    isMultiPart = false;
+
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['session_id'] = sessionId;
+    isMultiPart = false;
+    var dioCall = dioClient.get(ApiConstants.reportAnalysis, queryParameters:  data);
+    try {
+      return callApiWithErrorParser(dioCall).then((response) => ReportAnalysisResponse.fromJson(response.data));
     } catch (e) {
       debugPrint(e.printError as String?);
       rethrow;

@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:multiselect/multiselect.dart';
 
 import '../../../custom_widgets/app_widgets.dart';
 import '../../../custom_widgets/custom_edittext.dart';
@@ -184,7 +185,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                             'Arrhythmia',
                             'Heart Attack',
                             "Asthma",
-                            'Chronic Obstructive Pulmonary Disease (COPD)',
+                            'Chronic Obstructive Pulmonary Disease',
                             "High Cholesterol",
                             "Diabetes",
                             "Stroke",
@@ -429,3 +430,44 @@ class ReportFormFiledPage extends GetView<HomeController> {
 //               })
 //             ],
 //           )
+
+//DropDownMultiSelect(
+//
+//                         selectedValuesStyle: const TextStyle(color: Colors.black),
+//                         decoration: const InputDecoration(
+//                           labelText: "Medical History",
+//                           enabledBorder: OutlineInputBorder(borderRadius:
+//                           BorderRadius.all(Radius.circular(4)), borderSide: BorderSide(color: Colors.grey, width: 1.5)),
+//                           focusedBorder: OutlineInputBorder(
+//                               borderRadius: BorderRadius.all(Radius.circular(4)),
+//                               borderSide: BorderSide(
+//                                 color: Colors.blue,
+//                                 width: 1.5,
+//                               )),
+//                         ),
+//                         options: [
+//                           'Hypertension',
+//                           'Arrhythmia',
+//                           'Heart Attack',
+//                           "Asthma",
+//                           'Chronic Obstructive Pulmonary Disease (COPD)',
+//                           "High Cholesterol",
+//                           "Diabetes",
+//                           "Stroke",
+//                           "Epilepsy",
+//                           "Migraines",
+//                           "Irritable Bowel Syndrome (IBS)",
+//                           "Crohn's Disease",
+//                           "Rheumatoid Arthritis",
+//                           "Lupus",
+//                           "Depression",
+//                           "Anxiety"
+//                         ],
+//                         selectedValues: controller.currentMedicationsList.value,
+//
+//                         onChanged: (List<String> value) {
+//                           //   value = selectedCheckBoxValue;
+//                           print("${controller.currentMedicationsList.value}");
+//                         },
+//                         whenEmpty: 'Select Location',
+//                       ),

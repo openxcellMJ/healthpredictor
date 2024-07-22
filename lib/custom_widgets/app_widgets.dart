@@ -36,7 +36,7 @@ class AppWidgets {
       title: titleView ??
           Text(
             title ?? "",
-            style: style ?? Get.theme.textTheme.displayLarge?.copyWith(fontSize: 18, color: AppColors.gradientMiddle),
+            style: style ?? Get.theme.textTheme.displayLarge?.copyWith(fontSize: 20, color: AppColors.gradientMiddle),
           ),
       bottom: tabLayout,
     );

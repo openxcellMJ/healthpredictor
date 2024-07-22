@@ -48,8 +48,6 @@ class ReportFormFiledPage extends GetView<HomeController> {
                 if (_validateStep(controller.activeCurrentStep.value)) {
                   controller.activeCurrentStep.value += 1;
                 }
-              } else {
-                setupApicallData();
               }
             },
             onStepTapped: (value) {
@@ -285,6 +283,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
     form.currentMedications = [controller.currentMedications.value];
     form.frequencyOfCheckups = [controller.frequencyOfCheckups.value];
     form.typeOfPhysicalActivities = [controller.physicalActivities.value];
+    controller.fillFormApi(form);
     print("tests=>${form.toJson()}");
   }
 
@@ -307,6 +306,8 @@ class ReportFormFiledPage extends GetView<HomeController> {
         // Add validation logic for step 2 here
         break;
       case 3:
+        setupApicallData();
+
         // Add validation logic for step 3 here
         break;
       case 4:

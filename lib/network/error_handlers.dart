@@ -45,8 +45,8 @@ Exception _parseDioErrorResponse(DioException dioError) {
     serverMessage = dioError.response?.data != null
         ? dioError.response?.data["message"]
         : " ";
-    key =
-        dioError.response?.data != null ? dioError.response?.data["key"] : " ";
+    // key =
+    //     dioError.response?.data != null ? dioError.response?.data["key"] : " ";
 
     logger.logPrint("${serverMessage}");
     logger.logPrint(key);

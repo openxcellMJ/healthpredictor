@@ -21,24 +21,22 @@ class HomeController extends GetxController {
 
   HomeController(this.mainUseCase);
 
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController ageController = TextEditingController(text: "1");
-  final TextEditingController heightController = TextEditingController(text: "1");
-  final TextEditingController weightController = TextEditingController(text: "1");
-  final TextEditingController sleepHoursController = TextEditingController(text: "1");
-  final TextEditingController physicalExamController = TextEditingController();
-  final TextEditingController waterIntakeController = TextEditingController(text: "1");
-  final TextEditingController stepsCountController = TextEditingController(text: "1");
-  final TextEditingController exerciseHoursController = TextEditingController(text: "1");
-  final TextEditingController workHoursController = TextEditingController(text: "1");
-  final TextEditingController systolicController = TextEditingController(text: "1");
-  final TextEditingController diastolicController = TextEditingController(text: "1");
-  final TextEditingController heartRateController = TextEditingController(text: "1");
-  final TextEditingController bloodSugarController = TextEditingController(text: "1");
-
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController ageController = TextEditingController(text: "1");
+  TextEditingController heightController = TextEditingController(text: "1");
+  TextEditingController weightController = TextEditingController(text: "1");
+  TextEditingController sleepHoursController = TextEditingController(text: "1");
+  TextEditingController physicalExamController = TextEditingController();
+  TextEditingController waterIntakeController = TextEditingController(text: "1");
+  TextEditingController stepsCountController = TextEditingController(text: "1");
+  TextEditingController exerciseHoursController = TextEditingController(text: "1");
+  TextEditingController workHoursController = TextEditingController(text: "1");
+  TextEditingController systolicController = TextEditingController(text: "1");
+  TextEditingController diastolicController = TextEditingController(text: "1");
+  TextEditingController heartRateController = TextEditingController(text: "1");
+  TextEditingController bloodSugarController = TextEditingController(text: "1");
   final TextEditingController chatController = TextEditingController();
-
   var gender = 'Male'.obs;
   var medicalHistory = 'Hypertension'.obs;
   var heredityDiseases = 'Diabetes'.obs;
@@ -59,27 +57,26 @@ class HomeController extends GetxController {
   var sessionId = "".obs;
   ScrollController scrollController = ScrollController();
 
-
   var currentMedicationsList = <String>[].obs;
-
-
 
   clearFormValues() {
     firstNameController.clear();
     emailController.clear();
-    ageController.clear();
-    heightController.clear();
-    weightController.clear();
-    sleepHoursController.clear();
-    physicalExamController.clear();
-    waterIntakeController.clear();
-    stepsCountController.clear();
-    exerciseHoursController.clear();
-    workHoursController.clear();
-    systolicController.clear();
-    diastolicController.clear();
-    heartRateController.clear();
-    bloodSugarController.clear();
+    firstNameController = TextEditingController();
+    emailController = TextEditingController();
+    ageController = TextEditingController(text: "1");
+    heightController = TextEditingController(text: "1");
+    weightController = TextEditingController(text: "1");
+    sleepHoursController = TextEditingController(text: "1");
+    physicalExamController = TextEditingController();
+    waterIntakeController = TextEditingController(text: "1");
+    stepsCountController = TextEditingController(text: "1");
+    exerciseHoursController = TextEditingController(text: "1");
+    workHoursController = TextEditingController(text: "1");
+    systolicController = TextEditingController(text: "1");
+    diastolicController = TextEditingController(text: "1");
+    heartRateController = TextEditingController(text: "1");
+    bloodSugarController = TextEditingController(text: "1");
     mySelectedAgendaDate.value = DateTime.now();
     gender.value = 'Male';
     medicalHistory.value = 'Hypertension';

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -68,14 +69,14 @@ class FormAnswerPage extends GetView<HomeController> {
             style: Get.theme.textTheme.displayLarge?.copyWith(fontSize: 20, color: AppColors.gradientMiddle),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-              padding: const EdgeInsets.all(15),
-              child: Obx(
-                () => AppWidgets.setTextWidget(controller.result.value, align: TextAlign.start, lines: 10000, styles: Get.theme.textTheme.displayMedium?.copyWith(color: AppColors.blackFont, fontSize: 15)),
-              )),
-        ),
+        body: Obx(() => Markdown(data: controller.result.value,controller: controller.scrollController,styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
+            textTheme: TextTheme(
+                bodyText2: TextStyle(
+                    fontSize: 20.0, color: Colors.black87))))) ),
       ),
     );
   }
 }
+//Obx(
+//                 () => AppWidgets.setTextWidget(controller.result.value, align: TextAlign.start, lines: 10000, styles: Get.theme.textTheme.displayMedium?.copyWith(color: AppColors.blackFont, fontSize: 15)),
+//               )

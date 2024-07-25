@@ -2,10 +2,10 @@ class FillFormRequest {
   String? full_name;
   String? email;
   String? gender;
-  int? age;
-  int? heightCm;
-  int? weightKg;
-  int? averageSleepHours;
+  dynamic age;
+  dynamic heightCm;
+  dynamic weightKg;
+  dynamic averageSleepHours;
   String? lastPhysicalExam;
   int? dailyWaterIntakeLitres;
   int? stepsCountPerDay;

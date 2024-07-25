@@ -64,44 +64,85 @@ class ReportFormFiledPage extends GetView<HomeController> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: AppColors.gradientMiddle, width: 0.5), color: AppColors.gradientStart),
-                      child: ElevatedButton(
-                        onPressed: details.onStepCancel,
-                        style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))), backgroundColor: const MaterialStatePropertyAll(Colors.white)),
-                        child: Text(
-                          "Back",
-                          style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.gradientMiddle, fontSize: 14.sp),
+                  Obx(
+                    () => Visibility(
+                      visible: controller.activeCurrentStep.value != 0,
+                      child: Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(10)), border: Border.all(color: AppColors.gradientMiddle, width: 0.5), color: AppColors.gradientStart),
+                          child: ElevatedButton(
+                            onPressed: details.onStepCancel,
+                            style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10)))), backgroundColor: const MaterialStatePropertyAll(Colors.white)),
+                            child: Text(
+                              "Back",
+                              style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.gradientMiddle, fontSize: 14.sp),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            AppColors.gradientStart,
-                            AppColors.gradientMiddle,
-                            AppColors.gradientEnd,
-                          ],
+                  Obx(
+                    () => Visibility(visible: controller.activeCurrentStep.value != 0, child: const SizedBox(width: 10)),
+                  ),
+                  Obx(
+                  () =>
+                  Visibility(
+                    visible: controller.cIndex.value < 3,
+                    child: Expanded(
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: [
+                              AppColors.gradientStart,
+                              AppColors.gradientMiddle,
+                              AppColors.gradientEnd,
+                            ],
+                          ),
                         ),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: details.onStepContinue,
-                        style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
-                        child: Text(
-                          "Next",
-                          style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 14.sp),
+                        child: ElevatedButton(
+                          onPressed: details.onStepContinue,
+                          style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
+                          child: Text(
+                            "Next",
+                            style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 14.sp),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ),),
+                  Obx(
+                    () => Visibility(
+                      visible: controller.cIndex.value == 3,
+                      child: Expanded(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [
+                                AppColors.gradientStart,
+                                AppColors.gradientMiddle,
+                                AppColors.gradientEnd,
+                              ],
+                            ),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () => setupApicallData(),
+                            style: Get.theme.elevatedButtonTheme.style?.copyWith(shape: const MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0)))), backgroundColor: const MaterialStatePropertyAll(Colors.transparent)),
+                            child: Text(
+                              "Submit",
+                              style: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.colorWhite, fontSize: 14.sp),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               );
             },
@@ -122,8 +163,8 @@ class ReportFormFiledPage extends GetView<HomeController> {
                         controller.gender.value = newValue!;
                       }),
                       CustomEditText(controller: controller.ageController, hintText: 'Age', type: TextInputType.number, maxLength: 3, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
-                      CustomEditText(controller: controller.heightController, hintText: 'Height (cm)', type: TextInputType.number, maxLength: 4, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
-                      CustomEditText(controller: controller.weightController, hintText: 'Weight (kg)', type: TextInputType.number, maxLength: 4, fieldType: StringNames.phoneField, textInputAction: TextInputAction.done),
+                      CustomEditText(controller: controller.heightController, hintText: 'Height (cm)', type: const TextInputType.numberWithOptions(decimal: true), maxLength: 4, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.weightController, hintText: 'Weight (kg)', type: const TextInputType.numberWithOptions(decimal: true), maxLength: 4, fieldType: StringNames.phoneField, textInputAction: TextInputAction.done),
                       const SizedBox(height: 15),
                     ],
                   )),
@@ -137,7 +178,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                     children: [
                       AppWidgets.setTextWidget('Lifestyle', align: TextAlign.start, lines: 1, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.blackFont, fontSize: 20)),
                       const SizedBox(height: 10),
-                      CustomEditText(controller: controller.sleepHoursController, hintText: 'Average hours of sleep per night', maxLength: 3, type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.sleepHoursController, hintText: 'Average hours of sleep per night', maxLength: 3, type: TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
                       CustomEditText(controller: controller.waterIntakeController, hintText: 'Daily Water Intake (litres)', maxLength: 4, type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
                       CustomEditText(controller: controller.stepsCountController, hintText: 'Steps Count (Per Day)', maxLength: 5, type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
                       CustomEditText(controller: controller.exerciseHoursController, hintText: 'Minutes of exercise per day', maxLength: 4, type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
@@ -308,9 +349,9 @@ class ReportFormFiledPage extends GetView<HomeController> {
     form.email = controller.emailController.text;
     form.gender = controller.gender.value;
     form.age = int.parse(controller.ageController.text);
-    form.heightCm = int.parse(controller.heightController.text);
-    form.weightKg = int.parse(controller.weightController.text);
-    form.averageSleepHours = int.parse(controller.sleepHoursController.text);
+    form.heightCm = double.parse(controller.heightController.text);
+    form.weightKg = double.parse(controller.weightController.text);
+    form.averageSleepHours = double.parse(controller.sleepHoursController.text);
     form.dailyWaterIntakeLitres = int.parse(controller.waterIntakeController.text);
     form.stepsCountPerDay = int.parse(controller.stepsCountController.text);
     form.dailyExerciseHours = int.parse(controller.exerciseHoursController.text);
@@ -335,6 +376,9 @@ class ReportFormFiledPage extends GetView<HomeController> {
   }
 
   bool _validateStep(int currentStep) {
+    print("etetet=>${currentStep}");
+    controller.cIndex.value = currentStep;
+    print("etetet=>${currentStep}=>${controller.cIndex.value}");
     switch (currentStep) {
       case 0:
         if (controller.firstNameController.text.trim().isEmpty) {
@@ -352,11 +396,10 @@ class ReportFormFiledPage extends GetView<HomeController> {
         // Add validation logic for step 2 here
         break;
       case 3:
-        setupApicallData();
-
         // Add validation logic for step 3 here
         break;
       case 4:
+        setupApicallData();
         break;
     }
     return true;

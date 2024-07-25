@@ -50,6 +50,7 @@ class HomeController extends GetxController {
   var physicalActivities = 'Running'.obs;
   var mySelectedAgendaDate = DateTime.now().obs;
   var activeCurrentStep = 0.obs;
+  var cIndex = 0.obs;
   var result = "".obs;
   var chats = [].obs;
   var isBotTyping = false.obs;

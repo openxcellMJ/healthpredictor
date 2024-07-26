@@ -38,6 +38,7 @@ class FormAnswerPage extends GetView<HomeController> {
           actions: [
             GestureDetector(
               onTap: () {
+                controller.chats.clear();
                 Get.to(QuestionAnswerPage());
               },
               child: Container(
@@ -69,10 +70,7 @@ class FormAnswerPage extends GetView<HomeController> {
             style: Get.theme.textTheme.displayLarge?.copyWith(fontSize: 20, color: AppColors.gradientMiddle),
           ),
         ),
-        body: Obx(() => Markdown(data: controller.result.value,controller: controller.scrollController,styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
-            textTheme: TextTheme(
-                bodyText2: TextStyle(
-                    fontSize: 20.0, color: Colors.black87))))) ),
+        body: Obx(() => Markdown(data: controller.result.value, controller: controller.scrollController, styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 18, color: Colors.black87)))))),
       ),
     );
   }

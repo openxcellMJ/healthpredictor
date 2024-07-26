@@ -23,31 +23,31 @@ class HomeController extends GetxController {
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController ageController = TextEditingController(text: "1");
+  TextEditingController ageController = TextEditingController(text: "18");
   TextEditingController heightController = TextEditingController(text: "1");
   TextEditingController weightController = TextEditingController(text: "1");
   TextEditingController sleepHoursController = TextEditingController(text: "1");
   TextEditingController physicalExamController = TextEditingController();
-  TextEditingController waterIntakeController = TextEditingController(text: "1");
-  TextEditingController stepsCountController = TextEditingController(text: "1");
-  TextEditingController exerciseHoursController = TextEditingController(text: "1");
-  TextEditingController workHoursController = TextEditingController(text: "1");
-  TextEditingController systolicController = TextEditingController(text: "1");
-  TextEditingController diastolicController = TextEditingController(text: "1");
-  TextEditingController heartRateController = TextEditingController(text: "1");
-  TextEditingController bloodSugarController = TextEditingController(text: "1");
+  TextEditingController waterIntakeController = TextEditingController();
+  TextEditingController stepsCountController = TextEditingController();
+  TextEditingController exerciseHoursController = TextEditingController();
+  TextEditingController workHoursController = TextEditingController();
+  TextEditingController systolicController = TextEditingController();
+  TextEditingController diastolicController = TextEditingController();
+  TextEditingController heartRateController = TextEditingController();
+  TextEditingController bloodSugarController = TextEditingController();
   final TextEditingController chatController = TextEditingController();
   var gender = 'Male'.obs;
-  var medicalHistory = 'Hypertension'.obs;
+  var medicalHistory = 'Essential'.obs;
   var heredityDiseases = 'Diabetes'.obs;
-  var smokingStatus = 'Never'.obs;
-  var alcoholConsumption = 'None'.obs;
-  var physicalActivityLevel = 'Sedentary'.obs;
-  var dietType = 'Omnivore'.obs;
-  var stressLevel = 'Low'.obs;
+  var smokingStatus = 'Never Smoked'.obs;
+  var alcoholConsumption = 'Never'.obs;
+  var physicalActivityLevel = 'None'.obs;
+  var dietType = 'Balanced (Varied diet with all food groups)'.obs;
+  var stressLevel = 'No Stress'.obs;
   var currentMedications = 'Metformin'.obs;
-  var frequencyOfCheckups = 'Annually'.obs;
-  var physicalActivities = 'Running'.obs;
+  var frequencyOfCheckups = 'Never'.obs;
+  var physicalActivities = 'Walking'.obs;
   var mySelectedAgendaDate = DateTime.now().obs;
   var activeCurrentStep = 0.obs;
   var cIndex = 0.obs;
@@ -58,38 +58,212 @@ class HomeController extends GetxController {
   var sessionId = "".obs;
   ScrollController scrollController = ScrollController();
 
-  var currentMedicationsList = <String>[].obs;
+  var stressList = ["No Stress", "Low Stress", "Moderate Stress", "High Stress", "Very High Stress", "Extreme Stress", "None"];
+
+  var smokingList = ["Current Smoker", "Former Smoker", "Never Smoked", "Occasional Smoker", "Heavy Smoker", "Light Smoker", "None"];
+
+  var medicalHistoryList = [
+    "Essential",
+    "Secondary",
+    "Coronary Artery Disease",
+    "Heart Attack",
+    "Congestive Heart Failure",
+    "Arrhythmia",
+    "Asthma",
+    "Chronic Obstructive Pulmonary Disease (COPD)",
+    "Emphysema",
+    "Bronchitis",
+    "Diabetes - Type 1",
+    "Diabetes - Type 2",
+    "Diabetes - Gestational",
+    "High Cholesterol",
+    "Ischemic Stroke",
+    "Hemorrhagic Stroke",
+    "Transient Ischemic Attack",
+    "Epilepsy",
+    "Migraines",
+    "Irritable Bowel Syndrome (IBS)",
+    "Crohn's Disease",
+    "Ulcerative Colitis",
+    "Gastroesophageal Reflux Disease (GERD)",
+    "Peptic Ulcer",
+    "Rheumatoid Arthritis",
+    "Lupus",
+    "Multiple Sclerosis",
+    "Hashimoto's Thyroiditis",
+    "Depression",
+    "Anxiety",
+    "Bipolar Disorder",
+    "Schizophrenia",
+    "Chronic Kidney Disease",
+    "Acute Kidney Injury",
+    "Nephritis",
+    "Breast Cancer",
+    "Prostate Cancer",
+    "Lung Cancer",
+    "Colorectal Cancer",
+    "Skin Cancer",
+    "Parkinson's Disease",
+    "Alzheimer’s Disease",
+    "Food Allergies",
+    "Drug Allergies",
+    "Environmental Allergies",
+  ];
+
+  var heredityList = [
+    'Diabetes',
+    'Heart Disease',
+    "Hypertension",
+    "Cancer",
+    "Stroke",
+    "Asthma",
+    "Alzheimer's Disease",
+    "Parkinson's Disease",
+    "Autoimmune Disease",
+    "Mental Illness (e.g., Depression, Anxiety)",
+    "Breast Cancer",
+    "Prostate Cancer",
+    "Colon Cancer",
+    "Ovarian Cancer",
+    "Pancreatic Cancer",
+    "Huntington's Disease",
+    "Cystic Fibrosis",
+    "Sickle Cell Anemia",
+    "Hemophilia",
+    "Thalassemia",
+    "Muscular Dystrophy",
+    "Spinal Muscular Atrophy",
+    "Marfan Syndrome",
+    "Tay-Sachs Disease",
+    "Down Syndrome",
+    "Turner Syndrome",
+    "Klinefelter Syndrome",
+    "None"
+  ];
+
+  var alcoholList = [
+    "Daily",
+    "Weekly",
+    "Monthly",
+    "Occasional",
+    "Rarely",
+    "Never",
+    "Former Drinker",
+  ];
+
+  var physicalActivityLevelList = [
+    "None",
+    "Sedentary (Little to no exercise)",
+    "Lightly Active (Light exercise/sports 1-3 days/week)",
+    "Moderately Active (Moderate exercise/sports 3-5 days/week)",
+    "Very Active (Hard exercise/sports 6-7 days a week)",
+    "Extra Active (Very hard exercise/physical job)",
+  ];
+
+  var dietList = [
+    "Balanced (Varied diet with all food groups)",
+    "Vegetarian (No meat)",
+    "Vegan (No animal products)",
+    "Low-Carb (Reduced carbohydrate intake)",
+    "Low-Fat (Reduced fat intake)",
+    "High-Protein (Increased protein intake)",
+    "Ketogenic (High-fat, low-carb)",
+    "Mediterranean (Emphasis on fruits, vegetables, and olive oil)",
+    "Paleo (Focus on lean meats, fruits, and vegetables)",
+    "Gluten-Free (No gluten-containing foods)",
+    "Raw Food (Uncooked, unprocessed foods)"
+  ];
+
+  var checkupList = <String>[
+    "Never",
+    "Daily",
+    "Weekly",
+    "Monthly",
+    "Quarterly",
+    "Semi-Annually",
+    "Annually",
+    "Every Few Years",
+    "As Needed",
+  ];
+
+  var medicationsList = <String>[
+    'Metformin',
+    'Aspirin',
+    'Ibuprofen',
+    'Acetaminophen',
+    'Lisinopril',
+    'Atorvastatin',
+    'Omeprazole',
+    'Levothyroxine',
+    'Amlodipine',
+    'Albuterol (Ventolin, ProAir)',
+    'Hydrochlorothiazide',
+    'Simvastatin',
+    'Antibiotics',
+    'Antidepressants',
+    'Antihypertensives',
+    'Antidiabetics',
+    'Pain Relievers',
+    'Hormone Replacement Therapy',
+    'Anticoagulants',
+    'Inhalers',
+    'Antacids',
+    'Diuretics',
+    'Anti-anxiety Medications',
+    'Anti-seizure Medications',
+    'Blood Pressure Medications',
+    'Cholesterol Medications',
+    'Allergy Medications',
+    'Insulin'
+  ];
+
+  var typeOfPhysicalActivitiesList = <String>[
+    "Walking",
+    "Running",
+    "Cycling",
+    "Swimming",
+    "Strength Training",
+    "Yoga",
+    "Pilates",
+    "Aerobics",
+    "Team Sports (e.g., Soccer, Basketball)",
+    "Outdoor Activities (e.g., Hiking, Climbing)",
+    "Stretching",
+    "Dance",
+    "Martial Arts",
+    "Gym Workouts",
+  ];
 
   clearFormValues() {
     firstNameController.clear();
     emailController.clear();
     firstNameController = TextEditingController();
     emailController = TextEditingController();
-    ageController = TextEditingController(text: "1");
+    ageController = TextEditingController(text: "18");
     heightController = TextEditingController(text: "1");
     weightController = TextEditingController(text: "1");
     sleepHoursController = TextEditingController(text: "1");
     physicalExamController = TextEditingController();
-    waterIntakeController = TextEditingController(text: "1");
-    stepsCountController = TextEditingController(text: "1");
-    exerciseHoursController = TextEditingController(text: "1");
-    workHoursController = TextEditingController(text: "1");
-    systolicController = TextEditingController(text: "1");
-    diastolicController = TextEditingController(text: "1");
-    heartRateController = TextEditingController(text: "1");
-    bloodSugarController = TextEditingController(text: "1");
+    waterIntakeController = TextEditingController();
+    stepsCountController = TextEditingController();
+    exerciseHoursController = TextEditingController();
+    workHoursController = TextEditingController();
+    systolicController = TextEditingController();
+    diastolicController = TextEditingController();
+    heartRateController = TextEditingController();
+    bloodSugarController = TextEditingController();
     mySelectedAgendaDate.value = DateTime.now();
     gender.value = 'Male';
-    medicalHistory.value = 'Hypertension';
+    medicalHistory.value = 'Essential';
     heredityDiseases.value = 'Diabetes';
-    smokingStatus.value = 'Never';
-    alcoholConsumption.value = 'None';
-    physicalActivityLevel.value = 'Sedentary';
-    dietType.value = 'Omnivore';
-    stressLevel.value = 'Low';
+    smokingStatus.value = 'Never Smoked';
+    alcoholConsumption.value = 'Never';
+    physicalActivityLevel.value = 'None';
+    dietType.value = 'Balanced (Varied diet with all food groups)';
+    stressLevel.value = 'No Stress';
     currentMedications.value = 'Metformin';
-    frequencyOfCheckups.value = 'Annually';
-    physicalActivities.value = 'Running';
+    frequencyOfCheckups.value = 'Never';
+    physicalActivities.value = 'Walking';
     activeCurrentStep.value = 0;
   }
 
@@ -133,7 +307,8 @@ class HomeController extends GetxController {
       AppWidgets.closeProgress();
       if (response != null) {
         Utils.hideKeyboard();
-        Get.to(FormAnswerReportPage(), arguments: response.predictions);
+        sessionId.value = response.sessionId ?? "";
+        Get.to(FormAnswerPage(), arguments: response.predictions);
       }
     } catch (err) {
       AppWidgets.closeProgress();
@@ -200,12 +375,12 @@ class HomeController extends GetxController {
 
   void changeStatus(bool val) {
     isListen.value = val;
-    _scrollToBottom();
+    //_scrollToBottom();
   }
 
-  _scrollToBottom() {
-    if (scrollController.hasClients) scrollController.jumpTo(scrollController.position.maxScrollExtent);
-  }
+  // _scrollToBottom() {
+  //   if (scrollController.hasClients) scrollController.jumpTo(scrollController.position.maxScrollExtent);
+  // }
 
   void getFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(

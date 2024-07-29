@@ -27,6 +27,7 @@ class HomeController extends GetxController {
   TextEditingController heightController = TextEditingController(text: "1");
   TextEditingController weightController = TextEditingController(text: "1");
   TextEditingController sleepHoursController = TextEditingController(text: "1");
+  TextEditingController noteController = TextEditingController();
   TextEditingController physicalExamController = TextEditingController();
   TextEditingController waterIntakeController = TextEditingController();
   TextEditingController stepsCountController = TextEditingController();

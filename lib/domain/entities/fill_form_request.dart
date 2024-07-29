@@ -25,6 +25,7 @@ class FillFormRequest {
   List<String>? currentMedications;
   List<String>? frequencyOfCheckups;
   List<String>? typeOfPhysicalActivities;
+  String? additional_details;
 
   FillFormRequest(
       {this.full_name,
@@ -37,6 +38,7 @@ class FillFormRequest {
       this.lastPhysicalExam,
       this.dailyWaterIntakeLitres,
       this.stepsCountPerDay,
+      this.additional_details,
       this.dailyExerciseHours,
       this.workHours,
       this.systolicPressure,
@@ -63,9 +65,10 @@ class FillFormRequest {
     weightKg = json['weight_kg'];
     averageSleepHours = json['average_sleep_hours'];
     lastPhysicalExam = json['last_physical_exam'];
+    additional_details = json['additional_details'];
     dailyWaterIntakeLitres = json['daily_water_intake_litres'];
     stepsCountPerDay = json['steps_count_per_day'];
-    dailyExerciseHours = json['daily_exercise_hours'];
+    dailyExerciseHours = json['daily_exercise_minutes'];
     workHours = json['work_hours'];
     systolicPressure = json['systolic_pressure'];
     diastolicPressure = json['diastolic_pressure'];
@@ -78,7 +81,7 @@ class FillFormRequest {
     physicalActivityLevel = json['physical_activity_level'].cast<String>();
     dietType = json['diet_type'].cast<String>();
     stressLevel = json['stress_level'].cast<String>();
-     currentMedications = json['current_medications'].cast<String>();
+    currentMedications = json['current_medications'].cast<String>();
     frequencyOfCheckups = json['frequency_of_checkups'].cast<String>();
     typeOfPhysicalActivities = json['type_of_physical_activities'].cast<String>();
   }
@@ -91,11 +94,12 @@ class FillFormRequest {
     data['age'] = age;
     data['height_cm'] = heightCm;
     data['weight_kg'] = weightKg;
+    data['additional_details'] = additional_details;
     data['average_sleep_hours'] = averageSleepHours;
     data['last_physical_exam'] = lastPhysicalExam;
     data['daily_water_intake_litres'] = dailyWaterIntakeLitres;
     data['steps_count_per_day'] = stepsCountPerDay;
-    data['daily_exercise_hours'] = dailyExerciseHours;
+    data['daily_exercise_minutes'] = dailyExerciseHours;
     data['work_hours'] = workHours;
     data['systolic_pressure'] = systolicPressure;
     data['diastolic_pressure'] = diastolicPressure;

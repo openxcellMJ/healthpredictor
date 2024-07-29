@@ -1,13 +1,6 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:multiselect/multiselect.dart';
 
 import '../../../custom_widgets/app_widgets.dart';
 import '../../../custom_widgets/custom_edittext.dart';
@@ -262,6 +255,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                       _buildDropdownField('Type of Physical Activities', controller.typeOfPhysicalActivitiesList, controller.physicalActivities.value, (value) {
                         controller.physicalActivities.value = value!;
                       }),
+                      CustomEditText(controller: controller.noteController, hintText: 'Additional Details, if any', maxLength: 1000, maxLines: 5, type: TextInputType.text, fieldType: StringNames.regularField, textInputAction: TextInputAction.done),
                       const SizedBox(height: 15),
                     ],
                   ))
@@ -336,10 +330,10 @@ class ReportFormFiledPage extends GetView<HomeController> {
     form.dailyExerciseHours = double.parse(controller.exerciseHoursController.text);
     form.workHours = double.parse(controller.workHoursController.text);
     form.lastPhysicalExam = controller.physicalExamController.text;
-    form.heartRateBpm =controller.heartRateController.text.isNotEmpty ? int.parse(controller.heartRateController.text) : 0;
+    form.heartRateBpm = controller.heartRateController.text.isNotEmpty ? int.parse(controller.heartRateController.text) : 0;
     form.bloodSugarLevelsMgDl = controller.bloodSugarController.text.isNotEmpty ? int.parse(controller.bloodSugarController.text) : 0;
     form.systolicPressure = controller.systolicController.text.isNotEmpty ? int.parse(controller.systolicController.text) : 0;
-    form.diastolicPressure = controller.diastolicController.text.isNotEmpty ? int.parse(controller.diastolicController.text): 0;
+    form.diastolicPressure = controller.diastolicController.text.isNotEmpty ? int.parse(controller.diastolicController.text) : 0;
     form.medicalHistory = [controller.medicalHistory.value.toString()];
     form.heredityDiseases = [controller.heredityDiseases.value];
     form.smokingStatus = [controller.smokingStatus.value];
@@ -350,12 +344,12 @@ class ReportFormFiledPage extends GetView<HomeController> {
     form.currentMedications = [controller.currentMedications.value];
     form.frequencyOfCheckups = [controller.frequencyOfCheckups.value];
     form.typeOfPhysicalActivities = [controller.physicalActivities.value];
+    form.additional_details = controller.noteController.text.toString();
     controller.fillFormApi(form);
     print("tests=>${form.toJson()}");
   }
 
   bool _validateStep(int currentStep) {
-
     controller.cIndex.value = currentStep;
 
     switch (currentStep) {
@@ -366,7 +360,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
         } else if (!FormValidator.validateEmail(controller.emailController.text.trim())) {
           Utils.showSnackBar("Enter valid email address", color: AppColors.textFieldErrorText);
           return false;
-        }else if (controller.ageController.text.trim().isEmpty || double.parse(controller.ageController.text.trim()) < double.parse(18.toString())) {
+        } else if (controller.ageController.text.trim().isEmpty || double.parse(controller.ageController.text.trim()) < double.parse(18.toString())) {
           Utils.showSnackBar("Enter a valid age that is greater than 18", color: AppColors.textFieldErrorText);
           return false;
         } else if (controller.heightController.text.trim().isEmpty || double.parse(controller.heightController.text.trim()) <= double.parse(1.toString())) {
@@ -378,7 +372,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
         }
         break;
       case 1:
-        if (controller.sleepHoursController.text.trim().isNotEmpty  && (double.parse(controller.sleepHoursController.text.trim()) > double.parse(24.toString()))) {
+        if (controller.sleepHoursController.text.trim().isNotEmpty && (double.parse(controller.sleepHoursController.text.trim()) > double.parse(24.toString()))) {
           Utils.showSnackBar("Enter a valid sleep hour that is less than or equal 24", color: AppColors.textFieldErrorText);
           return false;
         }

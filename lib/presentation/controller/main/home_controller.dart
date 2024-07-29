@@ -39,7 +39,7 @@ class HomeController extends GetxController {
   TextEditingController bloodSugarController = TextEditingController();
   final TextEditingController chatController = TextEditingController();
   var gender = 'Male'.obs;
-  var medicalHistory = 'Essential'.obs;
+  var medicalHistory = 'Hypertension - Essential Hypertension'.obs;
   var heredityDiseases = 'Diabetes'.obs;
   var smokingStatus = 'Never Smoked'.obs;
   var alcoholConsumption = 'Never'.obs;
@@ -51,7 +51,8 @@ class HomeController extends GetxController {
   var physicalActivities = 'Walking'.obs;
   var mySelectedAgendaDate = DateTime.now().obs;
   var activeCurrentStep = 0.obs;
-  var cIndex = 0.obs;
+
+  //var cIndex = 0.obs;
   var result = "".obs;
   var chats = [].obs;
   var isBotTyping = false.obs;
@@ -64,51 +65,51 @@ class HomeController extends GetxController {
   var smokingList = ["Current Smoker", "Former Smoker", "Never Smoked", "Occasional Smoker", "Heavy Smoker", "Light Smoker", "None"];
 
   var medicalHistoryList = [
-    "Essential",
-    "Secondary",
-    "Coronary Artery Disease",
-    "Heart Attack",
-    "Congestive Heart Failure",
-    "Arrhythmia",
-    "Asthma",
-    "Chronic Obstructive Pulmonary Disease (COPD)",
-    "Emphysema",
-    "Bronchitis",
+    "Hypertension - Essential Hypertension",
+    "Hypertension - Secondary Hypertension",
+    "Heart Disease - Coronary Artery Disease",
+    "Heart Disease - Heart Attack",
+    "Heart Disease - Congestive Heart Failure",
+    "Heart Disease - Arrhythmia",
+    "Respiratory Diseases - Asthma",
+    "Respiratory Diseases - Chronic Obstructive Pulmonary Disease (COPD)",
+    "Respiratory Diseases - Emphysema",
+    "Respiratory Diseases - Bronchitis",
     "Diabetes - Type 1",
     "Diabetes - Type 2",
     "Diabetes - Gestational",
     "High Cholesterol",
-    "Ischemic Stroke",
-    "Hemorrhagic Stroke",
-    "Transient Ischemic Attack",
+    "Stroke - Ischemic Stroke",
+    "Stroke - Hemorrhagic Stroke",
+    "Stroke - Transient Ischemic Attack",
     "Epilepsy",
     "Migraines",
-    "Irritable Bowel Syndrome (IBS)",
-    "Crohn's Disease",
-    "Ulcerative Colitis",
-    "Gastroesophageal Reflux Disease (GERD)",
-    "Peptic Ulcer",
-    "Rheumatoid Arthritis",
-    "Lupus",
-    "Multiple Sclerosis",
-    "Hashimoto's Thyroiditis",
-    "Depression",
-    "Anxiety",
-    "Bipolar Disorder",
-    "Schizophrenia",
-    "Chronic Kidney Disease",
-    "Acute Kidney Injury",
-    "Nephritis",
-    "Breast Cancer",
-    "Prostate Cancer",
-    "Lung Cancer",
-    "Colorectal Cancer",
-    "Skin Cancer",
-    "Parkinson's Disease",
-    "Alzheimer’s Disease",
-    "Food Allergies",
-    "Drug Allergies",
-    "Environmental Allergies",
+    "Gastrointestinal Disorders - Irritable Bowel Syndrome (IBS)",
+    "Gastrointestinal Disorders - Crohn's Disease",
+    "Gastrointestinal Disorders - Ulcerative Colitis",
+    "Gastrointestinal Disorders - Gastroesophageal Reflux Disease (GERD)",
+    "Gastrointestinal Disorders - Peptic Ulcer",
+    "Autoimmune Diseases - Rheumatoid Arthritis",
+    "Autoimmune Diseases - Lupus",
+    "Autoimmune Diseases - Multiple Sclerosis",
+    "Autoimmune Diseases - Hashimoto's Thyroiditis",
+    "Mental Health Conditions - Depression",
+    "Mental Health Conditions - Anxiety",
+    "Mental Health Conditions - Bipolar Disorder",
+    "Mental Health Conditions - Schizophrenia",
+    "Kidney Disease - Chronic Kidney Disease",
+    "Kidney Disease - Acute Kidney Injury",
+    "Kidney Disease - Nephritis",
+    "Cancer - Breast Cancer",
+    "Cancer - Prostate Cancer",
+    "Cancer - Lung Cancer",
+    "Cancer - Colorectal Cancer",
+    "Cancer - Skin Cancer",
+    "Neurological Disorders - Parkinson's Disease",
+    "Neurological Disorders - Alzheimer’s Disease",
+    "Allergies - Food Allergies",
+    "Allergies - Drug Allergies",
+    "Allergies - Environmental Allergies",
   ];
 
   var heredityList = [
@@ -255,7 +256,7 @@ class HomeController extends GetxController {
     bloodSugarController = TextEditingController();
     mySelectedAgendaDate.value = DateTime.now();
     gender.value = 'Male';
-    medicalHistory.value = 'Essential';
+    medicalHistory.value = 'Hypertension - Essential Hypertension';
     heredityDiseases.value = 'Diabetes';
     smokingStatus.value = 'Never Smoked';
     alcoholConsumption.value = 'Never';

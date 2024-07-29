@@ -33,6 +33,8 @@ class ReportFormFiledPage extends GetView<HomeController> {
                 return;
               }
               controller.activeCurrentStep.value -= 1;
+              //controller.cIndex.value = controller.activeCurrentStep.value;
+
             },
             onStepContinue: () {
               // if (controller.activeCurrentStep.value < (5 - 1)) {
@@ -44,6 +46,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                   controller.activeCurrentStep.value += 1;
                 }
               }
+              print("conintue =>${controller.activeCurrentStep.value}=>}");
             },
             onStepTapped: (value) {
               Utils.hideKeyboard();
@@ -80,7 +83,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                   ),
                   Obx(
                     () => Visibility(
-                      visible: controller.cIndex.value < 3,
+                      visible: controller.activeCurrentStep.value < 4,
                       child: Expanded(
                         child: Container(
                           decoration: const BoxDecoration(
@@ -109,7 +112,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                   ),
                   Obx(
                     () => Visibility(
-                      visible: controller.cIndex.value == 3,
+                      visible: controller.activeCurrentStep.value == 4,
                       child: Expanded(
                         child: Container(
                           decoration: const BoxDecoration(
@@ -171,7 +174,7 @@ class ReportFormFiledPage extends GetView<HomeController> {
                     children: [
                       AppWidgets.setTextWidget('Lifestyle', align: TextAlign.start, lines: 1, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.blackFont, fontSize: 20)),
                       const SizedBox(height: 10),
-                      CustomEditText(controller: controller.sleepHoursController, hintText: 'Average hours of sleep per night', maxLength: 5, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.sleepHoursController, hintText: 'Average hours of sleep per night', maxLength: 2, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
                       CustomEditText(controller: controller.waterIntakeController, hintText: 'Daily Water Intake (litres)', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
                       CustomEditText(controller: controller.stepsCountController, hintText: 'Steps Count (Per Day)', maxLength: 5, type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
                       CustomEditText(controller: controller.exerciseHoursController, hintText: 'Minutes of exercise per day', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
@@ -303,10 +306,19 @@ class ReportFormFiledPage extends GetView<HomeController> {
             isDense: true,
             isExpanded: true,
             onChanged: onChanged,
+            selectedItemBuilder: (BuildContext context) {
+              return items.map<Widget>((String item) {
+                return Text(
+                  item,
+                  style:Get.theme.textTheme.bodyMedium?.copyWith(color: AppColors.black, fontSize: 14,  overflow: TextOverflow.ellipsis,)
+                );
+              }).toList();
+            },
             items: items.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Text(value, style: Get.theme.textTheme.bodyMedium?.copyWith(color: AppColors.black, fontSize: 14, overflow: TextOverflow.ellipsis)),
+                child: Text(value
+                    , style: Get.theme.textTheme.bodyMedium?.copyWith(color: AppColors.black, fontSize: 14,)),
               );
             }).toList(),
           ),
@@ -321,14 +333,14 @@ class ReportFormFiledPage extends GetView<HomeController> {
     form.full_name = controller.firstNameController.text;
     form.email = controller.emailController.text;
     form.gender = controller.gender.value;
-    form.age = int.parse(controller.ageController.text);
-    form.heightCm = double.parse(controller.heightController.text);
-    form.weightKg = double.parse(controller.weightController.text);
-    form.averageSleepHours = double.parse(controller.sleepHoursController.text);
-    form.dailyWaterIntakeLitres = double.parse(controller.waterIntakeController.text);
+    form.age = controller.ageController.text.isNotEmpty ? int.parse(controller.ageController.text) : 0;
+    form.heightCm =controller.heightController.text.isNotEmpty? double.parse(controller.heightController.text): 0;
+    form.weightKg = controller.weightController.text.isNotEmpty ? double.parse(controller.weightController.text) : 0;
+    form.averageSleepHours = controller.sleepHoursController.text.isNotEmpty ? double.parse(controller.sleepHoursController.text) : 0;
+    form.dailyWaterIntakeLitres = controller.waterIntakeController.text.isNotEmpty? double.parse(controller.waterIntakeController.text) : 0;
     form.stepsCountPerDay = controller.stepsCountController.text.isNotEmpty ? int.parse(controller.stepsCountController.text) : 0;
-    form.dailyExerciseHours = double.parse(controller.exerciseHoursController.text);
-    form.workHours = double.parse(controller.workHoursController.text);
+    form.dailyExerciseHours = controller.exerciseHoursController.text.isNotEmpty ? double.parse(controller.exerciseHoursController.text) : 0;
+    form.workHours = controller.workHoursController.text.isNotEmpty ? double.parse(controller.workHoursController.text) : 0;
     form.lastPhysicalExam = controller.physicalExamController.text;
     form.heartRateBpm = controller.heartRateController.text.isNotEmpty ? int.parse(controller.heartRateController.text) : 0;
     form.bloodSugarLevelsMgDl = controller.bloodSugarController.text.isNotEmpty ? int.parse(controller.bloodSugarController.text) : 0;
@@ -350,7 +362,8 @@ class ReportFormFiledPage extends GetView<HomeController> {
   }
 
   bool _validateStep(int currentStep) {
-    controller.cIndex.value = currentStep;
+    //controller.cIndex.value = currentStep;
+
 
     switch (currentStep) {
       case 0:

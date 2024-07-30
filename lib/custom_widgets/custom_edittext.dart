@@ -24,6 +24,7 @@ class CustomEditText extends StatefulWidget {
   final bool isPassword;
   final bool isIconNeed;
   String prefixIcon;
+
   //final Function(String)? onChanges;
   final String fieldType;
   final TextAlign align;
@@ -33,7 +34,7 @@ class CustomEditText extends StatefulWidget {
   CustomEditText(
       {super.key,
       this.align = TextAlign.start,
-     // this.onChanges,
+      // this.onChanges,
       this.errorText,
       this.hintText = "",
       this.alignment = Alignment.topLeft,
@@ -120,6 +121,11 @@ class _CustomState extends State<CustomEditText> {
         NoLeadingSpaceFormatter(),
         LengthLimitingTextInputFormatter(widget.maxLength),
       ];
+    } else if (fieldType == StringNames.onlyDecimalField) {
+      return [
+        NoLeadingSpaceFormatter(),
+        LengthLimitingTextInputFormatter(widget.maxLength),
+        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,3}'))];
     } else {
       return [
         LengthLimitingTextInputFormatter(widget.maxLength),

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -79,13 +80,16 @@ class QuestionAnswerPage extends GetView<HomeController> {
                                           color: (controller.chats[index].owner == StringNames.BOT ? AppColors.gradientMiddle.withOpacity(0.6) : Colors.grey.shade200),
                                         ),
                                         padding: const EdgeInsets.all(16),
-                                        child: Text(
-                                          controller.chats[index].text,
-                                          style: Get.textTheme.displayMedium?.copyWith(
-                                            fontSize: 15,
-                                            color: (controller.chats[index].owner == StringNames.BOT ? AppColors.colorWhite : AppColors.blackFontSubTitle),
-                                          ),
-                                        ),
+                                        child: MarkdownBody(
+                                            data: controller.chats[index].text,
+                                            styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(textTheme: TextTheme(bodyMedium: TextStyle(fontSize: 15, color: (controller.chats[index].owner == StringNames.BOT ? AppColors.colorWhite : AppColors.blackFontSubTitle)))))),
+                                        // child: Text(
+                                        //   controller.chats[index].text,
+                                        //   style: Get.textTheme.displayMedium?.copyWith(
+                                        //     fontSize: 15,
+                                        //     color: (controller.chats[index].owner == StringNames.BOT ? AppColors.colorWhite : AppColors.blackFontSubTitle),
+                                        //   ),
+                                        // ),
                                       ),
                                     ),
                                   );

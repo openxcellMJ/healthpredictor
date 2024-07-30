@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,6 @@ class ReportFormFiledPage extends GetView<HomeController> {
               }
               controller.activeCurrentStep.value -= 1;
               //controller.cIndex.value = controller.activeCurrentStep.value;
-
             },
             onStepContinue: () {
               // if (controller.activeCurrentStep.value < (5 - 1)) {
@@ -46,7 +46,6 @@ class ReportFormFiledPage extends GetView<HomeController> {
                   controller.activeCurrentStep.value += 1;
                 }
               }
-              print("conintue =>${controller.activeCurrentStep.value}=>}");
             },
             onStepTapped: (value) {
               Utils.hideKeyboard();
@@ -159,8 +158,8 @@ class ReportFormFiledPage extends GetView<HomeController> {
                         controller.gender.value = newValue!;
                       }),
                       CustomEditText(controller: controller.ageController, hintText: 'Age', type: TextInputType.number, maxLength: 3, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
-                      CustomEditText(controller: controller.heightController, hintText: 'Height (cm)', type: const TextInputType.numberWithOptions(decimal: true), maxLength: 5, fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
-                      CustomEditText(controller: controller.weightController, hintText: 'Weight (kg)', type: const TextInputType.numberWithOptions(decimal: true), maxLength: 5, fieldType: StringNames.emailField, textInputAction: TextInputAction.done),
+                      CustomEditText(controller: controller.heightController, hintText: 'Height (cm)', type: const TextInputType.numberWithOptions(decimal: true), maxLength: 5, fieldType: StringNames.onlyDecimalField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.weightController, hintText: 'Weight (kg)', type: const TextInputType.numberWithOptions(decimal: true), maxLength: 5, fieldType: StringNames.onlyDecimalField, textInputAction: TextInputAction.done),
                       const SizedBox(height: 15),
                     ],
                   )),
@@ -174,11 +173,11 @@ class ReportFormFiledPage extends GetView<HomeController> {
                     children: [
                       AppWidgets.setTextWidget('Lifestyle', align: TextAlign.start, lines: 1, styles: Get.theme.textTheme.displayLarge?.copyWith(color: AppColors.blackFont, fontSize: 20)),
                       const SizedBox(height: 10),
-                      CustomEditText(controller: controller.sleepHoursController, hintText: 'Average hours of sleep per night', maxLength: 2, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
-                      CustomEditText(controller: controller.waterIntakeController, hintText: 'Daily Water Intake (litres)', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.sleepHoursController, hintText: 'Average hours of sleep per night', maxLength: 2, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.onlyDecimalField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.waterIntakeController, hintText: 'Daily Water Intake (litres)', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.onlyDecimalField, textInputAction: TextInputAction.next),
                       CustomEditText(controller: controller.stepsCountController, hintText: 'Steps Count (Per Day)', maxLength: 5, type: TextInputType.number, fieldType: StringNames.phoneField, textInputAction: TextInputAction.next),
-                      CustomEditText(controller: controller.exerciseHoursController, hintText: 'Minutes of exercise per day', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.next),
-                      CustomEditText(controller: controller.workHoursController, hintText: 'Work Hours', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.emailField, textInputAction: TextInputAction.done),
+                      CustomEditText(controller: controller.exerciseHoursController, hintText: 'Minutes of exercise per day', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.onlyDecimalField, textInputAction: TextInputAction.next),
+                      CustomEditText(controller: controller.workHoursController, hintText: 'Work Hours', maxLength: 4, type: const TextInputType.numberWithOptions(decimal: true), fieldType: StringNames.onlyDecimalField, textInputAction: TextInputAction.done),
                       GestureDetector(
                           onTap: () {
                             Utils.hideKeyboard();
@@ -308,17 +307,22 @@ class ReportFormFiledPage extends GetView<HomeController> {
             onChanged: onChanged,
             selectedItemBuilder: (BuildContext context) {
               return items.map<Widget>((String item) {
-                return Text(
-                  item,
-                  style:Get.theme.textTheme.bodyMedium?.copyWith(color: AppColors.black, fontSize: 14,  overflow: TextOverflow.ellipsis,)
-                );
+                return Text(item,
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.black,
+                      fontSize: 14,
+                      overflow: TextOverflow.ellipsis,
+                    ));
               }).toList();
             },
             items: items.map((String value) {
               return DropdownMenuItem<String>(
                 value: value,
-                child: Text(value
-                    , style: Get.theme.textTheme.bodyMedium?.copyWith(color: AppColors.black, fontSize: 14,)),
+                child: Text(value,
+                    style: Get.theme.textTheme.bodyMedium?.copyWith(
+                      color: AppColors.black,
+                      fontSize: 14,
+                    )),
               );
             }).toList(),
           ),
@@ -334,10 +338,10 @@ class ReportFormFiledPage extends GetView<HomeController> {
     form.email = controller.emailController.text;
     form.gender = controller.gender.value;
     form.age = controller.ageController.text.isNotEmpty ? int.parse(controller.ageController.text) : 0;
-    form.heightCm =controller.heightController.text.isNotEmpty? double.parse(controller.heightController.text): 0;
+    form.heightCm = controller.heightController.text.isNotEmpty ? double.parse(controller.heightController.text) : 0;
     form.weightKg = controller.weightController.text.isNotEmpty ? double.parse(controller.weightController.text) : 0;
     form.averageSleepHours = controller.sleepHoursController.text.isNotEmpty ? double.parse(controller.sleepHoursController.text) : 0;
-    form.dailyWaterIntakeLitres = controller.waterIntakeController.text.isNotEmpty? double.parse(controller.waterIntakeController.text) : 0;
+    form.dailyWaterIntakeLitres = controller.waterIntakeController.text.isNotEmpty ? double.parse(controller.waterIntakeController.text) : 0;
     form.stepsCountPerDay = controller.stepsCountController.text.isNotEmpty ? int.parse(controller.stepsCountController.text) : 0;
     form.dailyExerciseHours = controller.exerciseHoursController.text.isNotEmpty ? double.parse(controller.exerciseHoursController.text) : 0;
     form.workHours = controller.workHoursController.text.isNotEmpty ? double.parse(controller.workHoursController.text) : 0;
@@ -364,29 +368,28 @@ class ReportFormFiledPage extends GetView<HomeController> {
   bool _validateStep(int currentStep) {
     //controller.cIndex.value = currentStep;
 
-
     switch (currentStep) {
       case 0:
         if (controller.firstNameController.text.trim().isEmpty) {
-          Utils.showSnackBar("Enter valid full name", color: AppColors.textFieldErrorText);
+          showFlushbar("Enter valid full name", color: AppColors.textFieldErrorText);
           return false;
         } else if (!FormValidator.validateEmail(controller.emailController.text.trim())) {
-          Utils.showSnackBar("Enter valid email address", color: AppColors.textFieldErrorText);
+          showFlushbar("Enter valid email address", color: AppColors.textFieldErrorText);
           return false;
         } else if (controller.ageController.text.trim().isEmpty || double.parse(controller.ageController.text.trim()) < double.parse(18.toString())) {
-          Utils.showSnackBar("Enter a valid age that is greater than 18", color: AppColors.textFieldErrorText);
+          showFlushbar("Enter a valid age that is greater than 18", color: AppColors.textFieldErrorText);
           return false;
         } else if (controller.heightController.text.trim().isEmpty || double.parse(controller.heightController.text.trim()) <= double.parse(1.toString())) {
-          Utils.showSnackBar("Enter valid height that is greater than 1", color: AppColors.textFieldErrorText);
+          showFlushbar("Enter valid height that is greater than 1", color: AppColors.textFieldErrorText);
           return false;
         } else if (controller.weightController.text.trim().isEmpty || double.parse(controller.weightController.text.trim()) <= double.parse(1.toString())) {
-          Utils.showSnackBar("Enter valid weight that is greater than 1", color: AppColors.textFieldErrorText);
+          showFlushbar("Enter valid weight that is greater than 1", color: AppColors.textFieldErrorText);
           return false;
         }
         break;
       case 1:
         if (controller.sleepHoursController.text.trim().isNotEmpty && (double.parse(controller.sleepHoursController.text.trim()) > double.parse(24.toString()))) {
-          Utils.showSnackBar("Enter a valid sleep hour that is less than or equal 24", color: AppColors.textFieldErrorText);
+          showFlushbar("Enter a valid sleep hour that is less than or equal 24", color: AppColors.textFieldErrorText);
           return false;
         }
         break;
@@ -401,6 +404,14 @@ class ReportFormFiledPage extends GetView<HomeController> {
         break;
     }
     return true;
+  }
+
+  showFlushbar(String message, {required Color color}) async {
+    await Flushbar(
+      title: message,
+      backgroundColor: AppColors.textFieldErrorText,
+      duration: const Duration(seconds: 3),
+    ).show(Get.context!);
   }
 
   Widget _buildMultiSelectField(String label, List<String> options, List<String> selectedItems) {

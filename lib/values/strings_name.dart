@@ -6,6 +6,9 @@ class StringNames {
   static const String normalField = "normal"; //no any space,special char not allow
   static const String passwordField = "password";
   static const String regularField = "regularField";
+  static const String onlyDecimalField = "decimalField";
+
+
   static const String allAllowed = "allAllowed";
   static const String phoneField = "phone";
   static const String strDateFormate = "dd MMMM yyyy";

@@ -459,6 +459,7 @@ class Utils {
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(20),
       behavior: SnackBarBehavior.floating,
+
     );
     if (Get.context != null) {
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);

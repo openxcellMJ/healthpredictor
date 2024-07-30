@@ -50,6 +50,7 @@ dependencies:
   http_parser: ^4.0.2
   multiselect:
   flutter_markdown:
+  another_flushbar: ^1.12.30
 
 
 dev_dependencies:

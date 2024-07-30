@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:envitely/domain/usecases/main/main_use_case.dart';
+import 'package:envitely/presentation/pages/main/form_answer_page.dart';
 import 'package:envitely/values/strings_name.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:envitely/presentation/pages/main/form_answer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +14,6 @@ import '../../../domain/entities/fill_form_request.dart';
 import '../../../network/base/base_api_exception.dart';
 import '../../../utils/utils.dart';
 import '../../../values/app_colors.dart';
-import '../../pages/main/form_answer_report_page.dart';
 
 class HomeController extends GetxController {
   final MainUseCase mainUseCase;
@@ -59,6 +58,7 @@ class HomeController extends GetxController {
   var isListen = true.obs;
   var sessionId = "".obs;
   ScrollController scrollController = ScrollController();
+  ScrollController chatScrollController = ScrollController();
 
   var stressList = ["No Stress", "Low Stress", "Moderate Stress", "High Stress", "Very High Stress", "Extreme Stress", "None"];
 

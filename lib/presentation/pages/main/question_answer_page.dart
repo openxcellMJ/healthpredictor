@@ -132,7 +132,7 @@ class QuestionAnswerPage extends GetView<HomeController> {
   }
 
   void addMyMessage() {
-    if (controller.chatController.text.isNotEmpty) {
+    if (controller.chatController.text.trim().isNotEmpty) {
       controller.chats.add(ChatModels(text: controller.chatController.text, owner: StringNames.YOU, dateTime: DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now())));
       controller.chats.refresh();
       askQuestionToBot(controller.chatController.text);

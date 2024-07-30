@@ -44,6 +44,7 @@ class HomePage extends GetView<HomeController> {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
+                      controller.chats.clear();
                       controller.clearFormValues();
                       Get.to(const ReportFormFiledPage());
                     },
@@ -89,6 +90,7 @@ class HomePage extends GetView<HomeController> {
                   const SizedBox(height: 10),
                   InkWell(
                     onTap: () {
+                      controller.chats.clear();
                       controller.getFiles();
                     },
                     child: Container(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:envitely/domain/usecases/main/main_use_case.dart';
 import 'package:envitely/presentation/pages/main/form_answer_page.dart';
 import 'package:envitely/values/strings_name.dart';
@@ -273,7 +274,8 @@ class HomeController extends GetxController {
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year - 1),
+      lastDate: DateTime.now(),
       builder: (BuildContext? context, Widget? child) {
         return Theme(
           data: ThemeData.dark().copyWith(
@@ -294,7 +296,6 @@ class HomeController extends GetxController {
           child: child ?? Container(),
         );
       },
-      lastDate: DateTime(3000),
     );
     if (picked != null && picked != mySelectedAgendaDate.value) {
       mySelectedAgendaDate.value = picked;
@@ -315,7 +316,7 @@ class HomeController extends GetxController {
     } catch (err) {
       AppWidgets.closeProgress();
       var msg = err as ApiException;
-      Utils.showSnackBar(msg.message, color: AppColors.colorRed);
+      showFlushbar(msg.message, color: AppColors.textFieldErrorText);
     }
   }
 
@@ -327,12 +328,12 @@ class HomeController extends GetxController {
       if (response != null) {
         sessionId.value = response.sessionId ?? "";
         callReportAnalysisData(sessionId.value);
-        print("tetst=>success");
+
       }
     } catch (err) {
       AppWidgets.closeProgress();
       var msg = err as ApiException;
-      Utils.showSnackBar(msg.message, color: AppColors.colorRed);
+      showFlushbar(msg.message, color: AppColors.textFieldErrorText);
     }
   }
 
@@ -347,7 +348,7 @@ class HomeController extends GetxController {
     } catch (err) {
       AppWidgets.closeProgress();
       var msg = err as ApiException;
-      Utils.showSnackBar(msg.message, color: AppColors.colorRed);
+      showFlushbar(msg.message, color: AppColors.textFieldErrorText);
     }
   }
 
@@ -362,7 +363,7 @@ class HomeController extends GetxController {
     } catch (err) {
       //AppWidgets.closeProgress();
       var msg = err as ApiException;
-      Utils.showSnackBar(msg.message, color: AppColors.colorRed);
+      showFlushbar(msg.message,color: AppColors.textFieldErrorText);
     }
   }
 
@@ -394,4 +395,14 @@ class HomeController extends GetxController {
       callUploadFileData(file.path);
     }
   }
+  showFlushbar(String message, {required Color color}) async {
+    await Flushbar(
+      title: message,
+      messageText: Container(),
+      message: "",
+      backgroundColor: AppColors.textFieldErrorText,
+      duration: const Duration(seconds: 3),
+    ).show(Get.context!);
+  }
+
 }

@@ -420,51 +420,51 @@ class Utils {
     }
   }
 
-  static void showSnackBar(String message, {Color? color,int second = 3}) {
-    // Get.showSnackbar(
-    //   GetSnackBar(
-    //     message: message,
-    //     isDismissible: true,
-    //     backgroundColor: color,
-    //     duration: const Duration(seconds: 3),
-    //   ),
-    // );
-    if(color == AppColors.error)
-    {
-      second = 5;
-    }
-    Get.showSnackbar(
-      GetSnackBar(
-        messageText: AppWidgets.setTextWidget(message, styles: Get.theme.snackBarTheme.contentTextStyle, lines: 5),
-        message: message,
-        margin: const EdgeInsets.all(10),
-        padding: const EdgeInsets.all(20),
-        isDismissible: true,
-        borderRadius: 8,
-        backgroundColor: color ?? Get.theme.snackBarTheme.backgroundColor!,
-        duration:  Duration(seconds: second),
-      ),
-    );
-  }
+  // static void showSnackBar(String message, {Color? color,int second = 3}) {
+  //   // Get.showSnackbar(
+  //   //   GetSnackBar(
+  //   //     message: message,
+  //   //     isDismissible: true,
+  //   //     backgroundColor: color,
+  //   //     duration: const Duration(seconds: 3),
+  //   //   ),
+  //   // );
+  //   if(color == AppColors.error)
+  //   {
+  //     second = 5;
+  //   }
+  //   Get.showSnackbar(
+  //     GetSnackBar(
+  //       messageText: AppWidgets.setTextWidget(message, styles: Get.theme.snackBarTheme.contentTextStyle, lines: 5),
+  //       message: message,
+  //       margin: const EdgeInsets.all(10),
+  //       padding: const EdgeInsets.all(20),
+  //       isDismissible: true,
+  //       borderRadius: 8,
+  //       backgroundColor: color ?? Get.theme.snackBarTheme.backgroundColor!,
+  //       duration:  Duration(seconds: second),
+  //     ),
+  //   );
+  // }
 
-  static void showSnackBarWithContext(String message, {Color? color, int second = 2}) {
-    if(color == AppColors.error)
-    {
-      second = 5;
-    }
-    var snackBar = SnackBar(
-      content: AppWidgets.setTextWidget(message, styles: Get.theme.snackBarTheme.contentTextStyle, lines: 5),
-      backgroundColor: color ?? Get.theme.snackBarTheme.backgroundColor,
-      duration: Duration(seconds: second),
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(20),
-      behavior: SnackBarBehavior.floating,
-
-    );
-    if (Get.context != null) {
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
-    }
-  }
+  // static void showSnackBarWithContext(String message, {Color? color, int second = 2}) {
+  //   if(color == AppColors.error)
+  //   {
+  //     second = 5;
+  //   }
+  //   var snackBar = SnackBar(
+  //     content: AppWidgets.setTextWidget(message, styles: Get.theme.snackBarTheme.contentTextStyle, lines: 5),
+  //     backgroundColor: color ?? Get.theme.snackBarTheme.backgroundColor,
+  //     duration: Duration(seconds: second),
+  //     margin: const EdgeInsets.all(10),
+  //     padding: const EdgeInsets.all(20),
+  //     behavior: SnackBarBehavior.floating,
+  //
+  //   );
+  //   if (Get.context != null) {
+  //     ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);
+  //   }
+  // }
 
   // static void getDialog({String? title, String? content, String? positiveButtonText, String? negativeButtonText, required Function positiveButtonClick, required Function negativeButtonClick}) {
   //   Get.dialog(AlertDialog(

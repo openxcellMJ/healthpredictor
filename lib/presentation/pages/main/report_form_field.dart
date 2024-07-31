@@ -371,25 +371,25 @@ class ReportFormFiledPage extends GetView<HomeController> {
     switch (currentStep) {
       case 0:
         if (controller.firstNameController.text.trim().isEmpty) {
-          showFlushbar("Enter valid full name", color: AppColors.textFieldErrorText);
+          controller.showFlushbar("Enter valid full name", color: AppColors.textFieldErrorText);
           return false;
         } else if (!FormValidator.validateEmail(controller.emailController.text.trim())) {
-          showFlushbar("Enter valid email address", color: AppColors.textFieldErrorText);
+          controller.showFlushbar("Enter valid email address", color: AppColors.textFieldErrorText);
           return false;
         } else if (controller.ageController.text.trim().isEmpty || double.parse(controller.ageController.text.trim()) < double.parse(18.toString())) {
-          showFlushbar("Enter a valid age that is greater than 18", color: AppColors.textFieldErrorText);
+          controller.showFlushbar("Enter a valid age that is greater than 18", color: AppColors.textFieldErrorText);
           return false;
         } else if (controller.heightController.text.trim().isEmpty || double.parse(controller.heightController.text.trim()) <= double.parse(1.toString())) {
-          showFlushbar("Enter valid height that is greater than 1", color: AppColors.textFieldErrorText);
+          controller.showFlushbar("Enter valid height that is greater than 1", color: AppColors.textFieldErrorText);
           return false;
         } else if (controller.weightController.text.trim().isEmpty || double.parse(controller.weightController.text.trim()) <= double.parse(1.toString())) {
-          showFlushbar("Enter valid weight that is greater than 1", color: AppColors.textFieldErrorText);
+          controller.showFlushbar("Enter valid weight that is greater than 1", color: AppColors.textFieldErrorText);
           return false;
         }
         break;
       case 1:
         if (controller.sleepHoursController.text.trim().isNotEmpty && (double.parse(controller.sleepHoursController.text.trim()) > double.parse(24.toString()))) {
-          showFlushbar("Enter a valid sleep hour that is less than or equal 24", color: AppColors.textFieldErrorText);
+          controller.showFlushbar("Enter a valid sleep hour that is less than or equal 24", color: AppColors.textFieldErrorText);
           return false;
         }
         break;
@@ -406,13 +406,6 @@ class ReportFormFiledPage extends GetView<HomeController> {
     return true;
   }
 
-  showFlushbar(String message, {required Color color}) async {
-    await Flushbar(
-      title: message,
-      backgroundColor: AppColors.textFieldErrorText,
-      duration: const Duration(seconds: 3),
-    ).show(Get.context!);
-  }
 
   Widget _buildMultiSelectField(String label, List<String> options, List<String> selectedItems) {
     return Padding(
